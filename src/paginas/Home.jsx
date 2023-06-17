@@ -6,7 +6,10 @@ const Home = () => {
 
   const [filtroLado, setFiltroLado] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedManguera, setSelectedManguera] = useState(null); // Nuevo estado para mantener el índice de la manguera seleccionada
+  const [selectedManguera, setSelectedManguera] = useState(null); 
+  const [isLadoMangueraSelected, setIsLadoMangueraSelected] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
 
 
   const cards_lados = [
@@ -101,14 +104,23 @@ const Home = () => {
   const handleLadoClick = lado => {
     setFiltroLado(lado);
     setSelectedManguera(null);
+    setIsLadoMangueraSelected(false);
   };
 
   const handleMangueraClick = manguera => {
     setSelectedManguera(manguera);
+    setIsLadoMangueraSelected(filtroLado !== '' && manguera !== null); 
   };
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    if (isLadoMangueraSelected) {
+      setIsModalOpen(true);
+    } else {
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 1500); 
+    }
   };
   
   const handleModalClose = () => {
@@ -155,15 +167,24 @@ const Home = () => {
                       <p className="inner_manguera_desc">{card_manguera.mangueraID}</p>
                       <p className="inner_manguera_desc">{card_manguera.descripcion}</p>
                       </div>
+                      
                   </div>
+                           
 
                 ))}
               </div>
             </div>
           )}
+
           
         </div>
 
+        {showAlert && (
+          <div className={`floating-alert ${showAlert ? 'show' : ''}`}>
+            <p className='alert-text'>Seleccionar lado y manguera.</p>
+          </div>
+        )}
+          
         {/* Campo de Modalidad*/}
         <div className="card">
             <h3 className="inner-title">Modalidad</h3>
@@ -179,6 +200,7 @@ const Home = () => {
           <h3 className="inner-title">Operación</h3>
           <div className="inner-cards">
             <button className='btn_cards'>boleta</button>
+            
             <button className='btn_cards'>FACTURA</button>
             <button className='btn_cards'>N/DESPACHO</button>
             <button className='btn_cards'>SERAFÍN</button>

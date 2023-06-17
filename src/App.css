@@ -227,8 +227,10 @@ margin: 0;
 }
 .inner-title{
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
 .inner-cards {
@@ -314,3 +316,29 @@ margin: 0;
   background-color: #595b59;
 }
 
+
+
+.floating-alert {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+  position: fixed;
+  top: 90%;
+  right: 10px;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 4px rgba(116, 114, 114, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.alert-text{
+  font-size: 1rem;
+  color: #721c24;
+  margin: 0;
+}
+.floating-alert.show {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+}
