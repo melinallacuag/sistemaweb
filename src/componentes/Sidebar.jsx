@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import logo from './logo_appsven.png';
+import logo from '../imagen/logo_appsven.png';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 
 const Sidebar = ({ isOpen }) => {

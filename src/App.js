@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
 import './App.css';
-import Sidebar from './Sidebar';
-import SidebarV from './SidebarV';
-import Header from './Header';
-import Home from './Home';
-import About from './About';
-import Contact from './Contact';
+import Sidebar from './componentes/Sidebar';
+import SidebarV from './componentes/SidebarV';
+import Home from './paginas/Home';
+import About from './paginas/About';
+import Contact from './paginas/Contact';
 import CloseIcon from '@mui/icons-material/Close';
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 
