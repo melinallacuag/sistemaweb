@@ -90,6 +90,17 @@
     margin-left: 0px !important;
   }
 
+  .inner-card {
+    padding: 0.5rem !important;
+    flex-direction: column !important;
+    gap: 0.15rem !important;
+}
+.inner_description {
+
+  font-size: 1.25rem !important;
+
+}
+
   
 }
 
@@ -227,23 +238,38 @@ margin: 0;
 }
 
 .inner-card {
-  background-color: #FFF;
-  padding: 10px;
+  background-color: #acacac;
+ padding: 0.85rem;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   box-shadow: 5PX;
+  cursor: pointer;
+  gap: 0.25rem;
 }
 .inner_description{
-  font-size: 0.85rem;
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 0;
+}
+.inner_manguera_desc{
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: bold;
   margin: 0;
 }
 
+.icon-fuel{
+  font-size: 2rem !important;
+  color: #ffffff;
+}
+
 .selected {
-  background-color: #00000091;
+  background-color: #4e73df;
 }
 
 .btn_cards{
@@ -264,5 +290,27 @@ margin: 0;
     color: hsl(0, 0%, 100%);
     background-color:hsl(224.69deg 69.38% 59.02%);
     transition: .8s ease;
+}
+
+.inner-card.selecteds {
+  background-color: #564f4f;
+}
+
+.inner-card.unselected {
+  background-color: #acacac;
+
+}
+
+.inner-card.selecteds.premium {
+  background-color: #2f6ed3;
+}
+.inner-card.selecteds.regular {
+  background-color: #0dc82f;
+}
+.inner-card.selecteds.glp {
+  background-color: #e39234;
+}
+.inner-card.selecteds.diesel {
+  background-color: #595b59;
 }
 

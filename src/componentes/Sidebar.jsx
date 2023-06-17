@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-
 import logo from '../imagen/logo_appsven.png';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 
 const Sidebar = ({ isOpen }) => {
 
-
   return (
     <div>
-
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
 
         <div className='contenedor_logo'>
@@ -50,6 +47,7 @@ const Sidebar = ({ isOpen }) => {
       </div>
     </div>
   );
+
 };
 
 export default Sidebar;
