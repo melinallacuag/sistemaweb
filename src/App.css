@@ -316,9 +316,41 @@ margin: 0;
   background-color: #595b59;
 }
 
+/*  Error de Input*/
+
+.alert-errorInput{
+  font-size: 0.75rem;
+  color: #721c24;
+  margin: 0;
+}
+
+.floating-alertErrorInput {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(116, 114, 114, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
 
 
-.floating-alert {
+.floating-alertErrorInput.show {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+}
+
+/*  Error de Error*/
+
+.alert-error{
+  font-size: 1rem;
+  color: #721c24;
+  margin: 0;
+}
+
+.floating-alertError {
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
   border-radius: 5px;
@@ -332,12 +364,39 @@ margin: 0;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
-.alert-text{
+
+
+.floating-alertError.show {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+}
+
+/*  Error de Success*/
+
+.alert-success{
   font-size: 1rem;
-  color: #721c24;
+  color: #176c18;
   margin: 0;
 }
-.floating-alert.show {
+
+
+.floating-alertSuccess{
+
+  background-color: #94e2b6;
+  border: 1px solid #6ec17c;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+  position: fixed;
+  top: 90%;
+  right: 10px;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 4px rgba(116, 114, 114, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.floating-alertSuccess.show {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 
