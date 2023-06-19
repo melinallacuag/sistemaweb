@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import logo from '../imagen/logo_appsven.png';
+import mobileLogo  from '../imagen/icon_app.png'
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 
 const Sidebar = ({ isOpen }) => {
+
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarOpen(!isMobileSidebarOpen);
+  };
 
   return (
     <div>
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
 
-        <div className='contenedor_logo'>
-           <img src={logo} className="App-logo" alt="logo" />
+      <div className='contenedor_logo'>
+          <img src={isMobileSidebarOpen ? mobileLogo : logo} className="App-logo" alt="logo" />
         </div>
   
         <ul className='sidebar_ul'>

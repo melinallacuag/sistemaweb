@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField } from '@mui/material';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import CloseIcon from '@mui/icons-material/Close';
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import Sidebar from '../componentes/Sidebar';
+import SidebarV from '../componentes/SidebarV';
 
 const Home = () => {
 
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
   const [filtroLado, setFiltroLado] = useState('');
   const [selectedManguera, setSelectedManguera] = useState(null); 
   const [isLadoMangueraSelected, setIsLadoMangueraSelected] = useState(false);
@@ -329,182 +339,193 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className='app'>
+      <div className={`main ${isOpen ? 'open' : ''}`} >        
+        <div className="toggle-button" onClick={toggleSidebar}> {isOpen ? <CloseIcon/> : <DensityMediumIcon/>} </div>
+                  
+          <Sidebar isOpen={isOpen}/>
 
-        <div className="card-container">
-        
-          {/* Campo de Lados*/}
-          <div className="card">
-            <h3 className="inner-title">Lados</h3>
-            <div className="inner-cards">
-              {cards_lados.map((card_lado, index) => (
-                <div className={`inner-card ${filtroLado === card_lado.nroLado ? 'selected' : ''}`}
-                  key={index}
-                  onClick={() => handleLadoClick(card_lado.nroLado)}>
-                  <LocalGasStationIcon className="icon-fuel" />
-                  <p className="inner_description">{card_lado.nroLado}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+            <div className='cont_sliroutes'>
 
-          {/* Campo de Mangueras*/}
-          {filtroLado !== '' && (
-            <div className="card">
-              <h3 className="inner-title">Mangueras</h3>
-              <div className="inner-cards">
+            <SidebarV/>
 
-                {mangueraFiltrados.map((card_manguera, index) => (
+              <div className="card-container">
               
-                  <div  className={`inner-card ${selectedManguera === index ? 'selecteds' : ''} ${selectedManguera === null ? 'unselected' : ''} 
-                    ${card_manguera.descripcion === 'G-PREMIUM' ? 'premium' : ''} ${card_manguera.descripcion === 'G-REGULAR' ? 'regular' : ''}  
-                    ${card_manguera.descripcion === 'DIESEL DB5' ? 'diesel' : ''} ${card_manguera.descripcion === 'GLP' ? 'glp' : ''}`}
-                    key={index}  onClick={() => handleMangueraClick(index)} >
-                      
-                      <LocalGasStationIcon className="icon-fuel" />
-                      <div>
-                      <p className="inner_manguera_desc">{card_manguera.mangueraID}</p>
-                      <p className="inner_manguera_desc">{card_manguera.descripcion}</p>
+                {/* Campo de Lados*/}
+                <div className="card">
+                  <h3 className="inner-title">Lados</h3>
+                  <div className="inner-cards">
+                    {cards_lados.map((card_lado, index) => (
+                      <div className={`inner-card ${filtroLado === card_lado.nroLado ? 'selected' : ''}`}
+                        key={index}
+                        onClick={() => handleLadoClick(card_lado.nroLado)}>
+                        <LocalGasStationIcon className="icon-fuel" />
+                        <p className="inner_description">{card_lado.nroLado}</p>
                       </div>
-                      
+                    ))}
                   </div>
-                           
-
-                ))}
-              </div>
-            </div>
-          )}
-
-          
-        </div>
-
-        {showAlertError && (
-          <div className={`floating-alertError ${showAlertError ? 'show' : ''}`}>
-            <p className='alert-error'>Seleccionar lado y manguera.</p>
-          </div>
-        )}
-             
-        {/* Campo de Modalidad*/}
-        <div className="card">
-            <h3 className="inner-title">Modalidad</h3>
-            <div className="inner-cards">
-                <button className='btn_cards' onClick={handleModalLibreOpen}>LIBRE</button>
-                <button className='btn_cards' onClick={handleModalSolesOpen}>SOLES</button>
-                <button className='btn_cards' onClick={handleModalGalonesOpen}>GALONES</button>
                 </div>
+
+                {/* Campo de Mangueras*/}
+                {filtroLado !== '' && (
+                  <div className="card">
+                    <h3 className="inner-title">Mangueras</h3>
+                    <div className="inner-cards">
+
+                      {mangueraFiltrados.map((card_manguera, index) => (
+                    
+                        <div  className={`inner-card ${selectedManguera === index ? 'selecteds' : ''} ${selectedManguera === null ? 'unselected' : ''} 
+                          ${card_manguera.descripcion === 'G-PREMIUM' ? 'premium' : ''} ${card_manguera.descripcion === 'G-REGULAR' ? 'regular' : ''}  
+                          ${card_manguera.descripcion === 'DIESEL DB5' ? 'diesel' : ''} ${card_manguera.descripcion === 'GLP' ? 'glp' : ''}`}
+                          key={index}  onClick={() => handleMangueraClick(index)} >
+                            
+                            <LocalGasStationIcon className="icon-fuel" />
+                            <div>
+                            <p className="inner_manguera_desc">{card_manguera.mangueraID}</p>
+                            <p className="inner_manguera_desc">{card_manguera.descripcion}</p>
+                            </div>
+                            
+                        </div>
+                                
+
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                
+              </div>
+
+              {showAlertError && (
+                <div className={`floating-alertError ${showAlertError ? 'show' : ''}`}>
+                  <p className='alert-error'>Seleccionar lado y manguera.</p>
+                </div>
+              )}
+                  
+              {/* Campo de Modalidad*/}
+              <div className="card">
+                  <h3 className="inner-title">Modalidad</h3>
+                  <div className="inner-cards">
+                      <button className='btn_cards' onClick={handleModalLibreOpen}>LIBRE</button>
+                      <button className='btn_cards' onClick={handleModalSolesOpen}>SOLES</button>
+                      <button className='btn_cards' onClick={handleModalGalonesOpen}>GALONES</button>
+                      </div>
+              </div>
+
+              {/* Campo de Operación*/}
+              <div className="card">
+                <h3 className="inner-title">Operación</h3>
+                <div className="inner-cards">
+                  <button className='btn_cards'>boleta</button>
+                  
+                  <button className='btn_cards'>FACTURA</button>
+                  <button className='btn_cards'>N/DESPACHO</button>
+                  <button className='btn_cards'>SERAFÍN</button>
+                  <button className='btn_cards'>PUNTOS</button>
+                  <button className='btn_cards'>CANJE</button>
+                  </div>
+              </div>
+
+              {/* Campo de Transacciones*/}
+              <div className="card">
+                <h3 className="inner-title">Transacciones</h3>
+              </div>
+
+              <Dialog open={isModalLibreOpen} onClose={handleModalLibreClose}>
+                <DialogTitle>Libre</DialogTitle>
+                <DialogContent>
+                  <p>¿Desea activar el modo LIBRE?</p>
+                </DialogContent>
+
+                {showAlertSuccess && (
+                    <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
+                      <p className="alert-success">Se guardó correctamente</p>
+                    </div>
+                  )}
+                <DialogActions>
+                  <Button onClick={handleModalLibreClose}>Cancelar</Button>
+                  <Button onClick={handleSubmitLibre}>Aceptar</Button>
+                </DialogActions>
+              </Dialog>
+
+              <Dialog open={isModalSolesOpen} onClose={handleModalSolesClose}>
+
+                <DialogTitle>Soles</DialogTitle>
+
+                  <DialogContent>
+
+                  {(errorSoles ) && (
+                  <div className={`floating-alertErrorInput ${errorSoles ? 'show' : ''}`}>
+                      {errorSoles && <p className="alert-errorInput">{errorSoles}</p>}
+                    </div>
+                  )}
+
+                    <TextField type="text" className='campo_input' value={inputSoles} onChange={handleSolesChange} margin="normal" label="Soles" fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" style={{ userSelect: 'none' }}>
+                            S/
+                          </InputAdornment>
+                        ),
+                      }}
+                    />  
+
+                  {showAlertSuccess && (
+                    <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
+                      <p className="alert-success">Se guardó correctamente</p>
+                    </div>
+                  )}
+
+                  </DialogContent>
+
+                <DialogActions>
+                  <Button onClick={handleModalSolesClose}>Cancelar</Button>
+                  <Button  onClick={handleSubmit} >Aceptar</Button>
+                </DialogActions>
+
+              </Dialog>
+
+
+              <Dialog open={isModalGalonesOpen} onClose={handleModalGalonesClose}>
+
+                <DialogTitle>Galones</DialogTitle>
+
+                  <DialogContent>
+
+                  {(errorGalones ) && (
+                  <div className={`floating-alertErrorInput ${errorGalones ? 'show' : ''}`}>
+                      {errorGalones && <p className="alert-errorInput">{errorGalones}</p>}
+                    </div>
+                  )}
+
+                    <TextField type="text" className='campo_input' value={inputGalones} onChange={handleGalonesChange} margin="normal" label="Galones" fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" style={{ userSelect: 'none' }}>
+                            S/
+                          </InputAdornment>
+                        ),
+                      }}
+                    />  
+
+                  {showAlertSuccess && (
+                    <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
+                      <p className="alert-success">Se guardó correctamente</p>
+                    </div>
+                  )}
+
+                  </DialogContent>
+
+                <DialogActions>
+                  <Button onClick={handleModalGalonesClose}>Cancelar</Button>
+                  <Button  onClick={handleSubmitGalones} >Aceptar</Button>
+                </DialogActions>
+
+                </Dialog>
         </div>
-
-        {/* Campo de Operación*/}
-        <div className="card">
-          <h3 className="inner-title">Operación</h3>
-          <div className="inner-cards">
-            <button className='btn_cards'>boleta</button>
-            
-            <button className='btn_cards'>FACTURA</button>
-            <button className='btn_cards'>N/DESPACHO</button>
-            <button className='btn_cards'>SERAFÍN</button>
-            <button className='btn_cards'>PUNTOS</button>
-            <button className='btn_cards'>CANJE</button>
-            </div>
-        </div>
-
-        {/* Campo de Transacciones*/}
-        <div className="card">
-          <h3 className="inner-title">Transacciones</h3>
-        </div>
-
-        <Dialog open={isModalLibreOpen} onClose={handleModalLibreClose}>
-          <DialogTitle>Libre</DialogTitle>
-          <DialogContent>
-            <p>¿Desea activar el modo LIBRE?</p>
-          </DialogContent>
-
-          {showAlertSuccess && (
-              <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
-                <p className="alert-success">Se guardó correctamente</p>
-              </div>
-            )}
-          <DialogActions>
-            <Button onClick={handleModalLibreClose}>Cancelar</Button>
-            <Button onClick={handleSubmitLibre}>Aceptar</Button>
-          </DialogActions>
-        </Dialog>
-
-        <Dialog open={isModalSolesOpen} onClose={handleModalSolesClose}>
-
-          <DialogTitle>Soles</DialogTitle>
-
-            <DialogContent>
-
-            {(errorSoles ) && (
-             <div className={`floating-alertErrorInput ${errorSoles ? 'show' : ''}`}>
-                {errorSoles && <p className="alert-errorInput">{errorSoles}</p>}
-              </div>
-            )}
-
-              <TextField type="text" className='campo_input' value={inputSoles} onChange={handleSolesChange} margin="normal" label="Soles" fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" style={{ userSelect: 'none' }}>
-                      S/
-                    </InputAdornment>
-                  ),
-                }}
-              />  
-
-            {showAlertSuccess && (
-              <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
-                <p className="alert-success">Se guardó correctamente</p>
-              </div>
-            )}
-
-            </DialogContent>
-
-          <DialogActions>
-            <Button onClick={handleModalSolesClose}>Cancelar</Button>
-            <Button  onClick={handleSubmit} >Aceptar</Button>
-          </DialogActions>
-
-        </Dialog>
-
-
-        <Dialog open={isModalGalonesOpen} onClose={handleModalGalonesClose}>
-
-          <DialogTitle>Galones</DialogTitle>
-
-            <DialogContent>
-
-            {(errorGalones ) && (
-            <div className={`floating-alertErrorInput ${errorGalones ? 'show' : ''}`}>
-                {errorGalones && <p className="alert-errorInput">{errorGalones}</p>}
-              </div>
-            )}
-
-              <TextField type="text" className='campo_input' value={inputGalones} onChange={handleGalonesChange} margin="normal" label="Galones" fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" style={{ userSelect: 'none' }}>
-                      S/
-                    </InputAdornment>
-                  ),
-                }}
-              />  
-
-            {showAlertSuccess && (
-              <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
-                <p className="alert-success">Se guardó correctamente</p>
-              </div>
-            )}
-
-            </DialogContent>
-
-          <DialogActions>
-            <Button onClick={handleModalGalonesClose}>Cancelar</Button>
-            <Button  onClick={handleSubmitGalones} >Aceptar</Button>
-          </DialogActions>
-
-          </Dialog>
+      </div>   
     </div>
+    
   );
 };
 
