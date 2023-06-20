@@ -9,7 +9,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import CloseIcon from '@mui/icons-material/Close';
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import Sidebar from '../componentes/Sidebar';
 import SidebarV from '../componentes/SidebarV';
 
@@ -642,8 +644,8 @@ const Home = () => {
                       </div>
                     )}
                   <DialogActions>
-                    <Button onClick={handleModalLibreClose}>Cancelar</Button>
-                    <Button onClick={handleSubmitLibre}>Aceptar</Button>
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalLibreClose}>Cancelar</Button>
+                    <Button variant="contained" color="primary" onClick={handleSubmitLibre}>Aceptar</Button>
                   </DialogActions>
                 </Dialog>
                 
@@ -679,8 +681,8 @@ const Home = () => {
                     </DialogContent>
 
                   <DialogActions>
-                    <Button onClick={handleModalSolesClose}>Cancelar</Button>
-                    <Button  onClick={handleSubmit} >Aceptar</Button>
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalSolesClose}>Cancelar</Button>
+                    <Button variant="contained" color="primary" onClick={handleSubmit} >Aceptar</Button>
                   </DialogActions>
 
                 </Dialog>
@@ -717,8 +719,8 @@ const Home = () => {
                     </DialogContent>
 
                   <DialogActions>
-                    <Button onClick={handleModalGalonesClose}>Cancelar</Button>
-                    <Button  onClick={handleSubmitGalones} >Aceptar</Button>
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalGalonesClose}>Cancelar</Button>
+                    <Button variant="contained" color="primary" onClick={handleSubmitGalones} >Aceptar</Button>
                   </DialogActions>
 
                 </Dialog>
@@ -730,131 +732,133 @@ const Home = () => {
 
                     <DialogContent>
 
-                    {(errorPlaca || errorDNI ||   errorNombre ) && (
-                    <div className={`floating-alertErrorInput ${errorPlaca ? 'show' : ''} ${errorDNI ? 'show' : ''}  ${errorNombre ? 'show' : ''} `}>
-                        {errorPlaca && <p className="alert-errorInput">{errorPlaca}</p>}
-                        {errorDNI && <p className="alert-errorInput">{errorDNI}</p>}
-                        {errorNombre && <p className="alert-errorInput">{errorNombre}</p>}
-                      </div>
-                    )}
-
-                      <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
-
-                      <TextField type="text" className='campo_input' value={inputDNI} onChange={handleDNIChange} margin="normal" label="Ingresar DNI" fullWidth /> 
-                      <p className="character-count">{DNICharacterCount}/8</p>
-
-                      <TextField type="text" className='campo_input' value={inputNombre} onChange={handleNombreChange} margin="normal" label="Ingresar Nombre" fullWidth /> 
-                      <p className="character-count">{NombreCharacterCount}</p>
-                      
-                      <TextField type="text" className='campo_input' value={inputDireccion} onChange={handleDireccionChange} margin="normal" label="Ingresar Dirección" fullWidth /> 
-                      
-                      <TextField type="text" className='campo_input' value={inputObservacion} onChange={handleObservacionChange} margin="normal" label="Ingresar Observación" fullWidth /> 
-
-                      <p>Forma de Pago:</p>
-
-                      <RadioGroup
-                        aria-label="Opciones"
-                        name="opciones"
-                        value={selectedOption}
-                        onChange={handleOptionChange} >
-
-                         <FormGroup row   style={{ display: 'flex', justifyContent: 'space-around' }}>
-
-                          <FormControlLabel
-                            value="Efectivo"
-                            control={<Radio />}
-                            label="Efectivo"
-                          />
-                          <FormControlLabel
-                            value="Tarjeta"
-                            control={<Radio />}
-                            label="Tarjeta"
-                          />
-                          <FormControlLabel
-                            value="Credito"
-                            control={<Radio />}
-                            label="Credito"
-                          />
-
-                         </FormGroup>
-                       
-                      </RadioGroup>
-
-                      {selectedOption === 'Efectivo' && (
-                        <>
-                          <div className='inf_pagoefectivo'>
-                            <p className='inf_text'>Se realizara el modo de Pago en Efectivo</p>
-                          </div>
-                        </>  
+                      {(errorPlaca || errorDNI ||   errorNombre ) && (
+                      <div className={`floating-alertErrorInput ${errorPlaca ? 'show' : ''} ${errorDNI ? 'show' : ''}  ${errorNombre ? 'show' : ''} `}>
+                          {errorPlaca && <p className="alert-errorInput">{errorPlaca}</p>}
+                          {errorDNI && <p className="alert-errorInput">{errorDNI}</p>}
+                          {errorNombre && <p className="alert-errorInput">{errorNombre}</p>}
+                        </div>
                       )}
 
-                      {selectedOption === 'Tarjeta' && (
-                        <>
-                          {(errorNOperacion || errorPagoEfectivo) && (
-                            <div className={`floating-alertErrorInput ${errorNOperacion ? 'show' : ''}  ${errorPagoEfectivo ? 'show' : ''} `}>
-                                {errorNOperacion && <p className="alert-errorInput">{errorNOperacion}</p>}
-                                {errorPagoEfectivo && <p className="alert-errorInput">{errorPagoEfectivo}</p>}
+                        <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth  style={{ height: '40px' }} />  
+
+                        <TextField type="text" className='campo_input' value={inputDNI} onChange={handleDNIChange} margin="normal" label="Ingresar DNI" fullWidth /> 
+                        <p className="character-count">{DNICharacterCount}/8</p>
+
+                        <TextField type="text" className='campo_input' value={inputNombre} onChange={handleNombreChange} margin="normal" label="Ingresar Nombre" fullWidth /> 
+                        <p className="character-count">{NombreCharacterCount}</p>
+                        
+                        <TextField type="text" className='campo_input' value={inputDireccion} onChange={handleDireccionChange} margin="normal" label="Ingresar Dirección" fullWidth /> 
+                        
+                        <TextField type="text" className='campo_input' value={inputObservacion} onChange={handleObservacionChange} margin="normal" label="Ingresar Observación" fullWidth /> 
+
+                        <p className='fpago_text' >Forma de Pago:</p>
+
+                        <RadioGroup
+                          aria-label="Opciones"
+                          name="opciones"
+                          value={selectedOption}
+                          onChange={handleOptionChange} >
+
+                          <FormGroup row style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+
+                            <FormControlLabel
+                              value="Efectivo"
+                              control={<Radio />}
+                              label="Efectivo"
+                            />
+                            <FormControlLabel
+                              value="Tarjeta"
+                              control={<Radio />}
+                              label="Tarjeta"
+                            />
+                            <FormControlLabel
+                              value="Credito"
+                              control={<Radio />}
+                              label="Credito"
+                            />
+
+                          </FormGroup>
+                        
+                        </RadioGroup>
+
+                        {selectedOption === 'Efectivo' && (
+                          <>
+                            <div className='inf_pagoefectivo'>
+                              <p className='inf_text'>Se realizara el modo de Pago en Efectivo</p>
                             </div>
-                          )}
+                          </>  
+                        )}
 
+                        {selectedOption === 'Tarjeta' && (
+                          <>
+                            {(errorNOperacion || errorPagoEfectivo) && (
+                              <div className={`floating-alertErrorInput ${errorNOperacion ? 'show' : ''}  ${errorPagoEfectivo ? 'show' : ''} `}>
+                                  {errorNOperacion && <p className="alert-errorInput">{errorNOperacion}</p>}
+                                  {errorPagoEfectivo && <p className="alert-errorInput">{errorPagoEfectivo}</p>}
+                              </div>
+                            )}
 
-                          <Select  value={selectedOptionFPago} onChange={handleOptionChangeFPago} fullWidth >
-                            {opciones.map((opcion, index) => (
-                              <MenuItem key={index} value={opcion}>
-                                {opcion}
-                              </MenuItem>
-                            ))}
-                          </Select>
+                            <FormControl variant="outlined" fullWidth>
+                              <InputLabel htmlFor="outlined-age-native-simple">Seleccion Tipo de Pago</InputLabel>
+                              <Select native value={selectedOptionFPago} onChange={handleOptionChangeFPago} label="Seleccion Tipo de Pago">
 
-                          <TextField
-                            type="text"
-                            className="campo_input"
-                            value={inputNOperacion}
-                            onChange={handleNOperacionChange}
-                            margin="normal"
-                            label="Ingresar N° de Operación"
-                            fullWidth/>
-                          <TextField
-                          type="text"
-                          className="campo_input"
-                          value={inputPagoEfectivo}
-                          onChange={handlePagoEfectivoChange}
-                          margin="normal"
-                          label="Ingresar Pago Efectivo"
-                          fullWidth/>
-                        </>
+                                {opciones.map((opcion, index) => (
+                                  <option key={index} value={opcion}>{opcion}</option>                      
+                                ))}
+                            
+                              </Select>
+                            </FormControl>
+                          
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputNOperacion}
+                              onChange={handleNOperacionChange}
+                              margin="normal"
+                              label="Ingresar N° de Operación"
+                              fullWidth/>
+
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputPagoEfectivo}
+                              onChange={handlePagoEfectivoChange}
+                              margin="normal"
+                              label="Ingresar Pago Efectivo"
+                              fullWidth/>
+
+                          </>
+                        )}
+
+                        {selectedOption === 'Credito' && (
+                          <>
+                            {( errorPagoEfectivo) && (
+                              <div className={`floating-alertErrorInput ${errorPagoEfectivo ? 'show' : ''} `}>
+                                  {errorPagoEfectivo && <p className="alert-errorInput">{errorPagoEfectivo}</p>}
+                              </div>
+                            )}
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputPagoEfectivo}
+                              onChange={handlePagoEfectivoChange}
+                              margin="normal"
+                              label="Ingresar Pago Efectivo"
+                              fullWidth/>
+                          </>
+                        )}
+
+                      {showAlertSuccess && (
+                        <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
+                          <p className="alert-success">Se guardó correctamente</p>
+                        </div>
                       )}
-
-                      {selectedOption === 'Credito' && (
-                        <>
-                          {( errorPagoEfectivo) && (
-                            <div className={`floating-alertErrorInput ${errorPagoEfectivo ? 'show' : ''} `}>
-                                {errorPagoEfectivo && <p className="alert-errorInput">{errorPagoEfectivo}</p>}
-                            </div>
-                          )}
-                          <TextField
-                            type="text"
-                            className="campo_input"
-                            value={inputPagoEfectivo}
-                            onChange={handlePagoEfectivoChange}
-                            margin="normal"
-                            label="Ingresar Pago Efectivo"
-                            fullWidth/>
-                        </>
-                      )}
-
-                    {showAlertSuccess && (
-                      <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
-                        <p className="alert-success">Se guardó correctamente</p>
-                      </div>
-                    )}
-
                     </DialogContent>
 
                   <DialogActions>
-                    <Button onClick={handleModalBoletaClose}>Boleta Simple</Button>
-                    <Button onClick={handleModalBoletaClose}>Cancelar</Button>
-                    <Button  onClick={handleSubmitBoleta} >Aceptar</Button>
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalBoletaClose}>Cancelar</Button>
+                    <Button variant="contained" color="primary"  onClick={handleSubmitBoleta} >Aceptar</Button>
                   </DialogActions>
 
                 </Dialog>

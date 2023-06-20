@@ -452,7 +452,7 @@ width: 100%;
 .character-count{
   margin: 0;
   text-align: end;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 .App-IMEI{
@@ -514,4 +514,36 @@ button:disabled {
   font-size: 0.8rem;
   color: #fff;
   text-align: center;
+}
+.fpago_text{
+  margin: 0;
+  font-size: 0.8rem;
+  color: #000;
+  text-align: start;
+  font-weight: 700;
+}
+
+.button{
+  font-weight: 600 !important;
+    border-radius: 0.35rem !important;
+    border: transparent !important;
+    color: #fff !important;
+    padding: 0.8em !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    font-size: 0.8rem !important;
+    cursor: pointer !important;
+    text-transform: capitalize !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+}
+
+.btn_cancelar{
+  color: hsl(0, 0%, 100%) !important;
+  background-color: hsl(158, 36%, 37%) !important;
+  transition: .8s ease !important;
+}
+.btn_guardar{
+
 }
