@@ -503,3 +503,15 @@ button:disabled {
   margin-bottom: 5px;
   margin-top: 5px;
 }
+
+.inf_pagoefectivo{
+  background-color: hsl(224.69deg 69.38% 59.02%);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.inf_text{
+  margin: 0;
+  font-size: 0.8rem;
+  color: #fff;
+  text-align: center;
+}
