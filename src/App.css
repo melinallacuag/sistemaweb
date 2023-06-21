@@ -100,6 +100,18 @@
   font-size: 1.25rem !important;
 
 }
+.transaction-table-container {
+  overflow-x: auto;
+}
+.datos_transacciones{
+
+  min-width: fit-content;
+  
+
+}
+.text_dato{
+  white-space: nowrap;
+}
 
   
 }
@@ -523,3 +535,59 @@ button:disabled {
   font-weight: 700;
 }
 
+.datos_transacciones{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  background-color: hsl(224.69deg 69.38% 59.02%);
+  border-radius: 0.5rem;
+  height: 35px;
+  margin-bottom: 0.35rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+.text_dato{
+  text-align: center;
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: bold;
+}
+
+.datosP_transacciones{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #acacac;
+  border-radius: 0.5rem;
+  height: 35px;
+  margin-bottom: 0.35rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+.text_datoP{
+  text-align: center;
+  color: #171616;
+  font-size: 0.55rem;
+  font-weight: bold;
+}
+
+.transaction-table-container::-webkit-scrollbar {
+  width: 2px; 
+  height: 0.5rem;/* width of the scrollbar */
+}
+
+.transaction-table-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the track */
+  border-radius: 2px; /* radius of the track */
+}
+
+.transaction-table-container::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scrollbar thumb */
+  border-radius: 2px; /* radius of the scrollbar thumb */
+}
+
+.transaction-table-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scrollbar thumb on hover */
+}

@@ -10,7 +10,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Sidebar from '../componentes/Sidebar';
 import SidebarV from '../componentes/SidebarV';
@@ -42,6 +41,36 @@ const Home = () => {
   const [inputGalones, setGalones] = useState('');
   const [errorGalones, setErrorGalones] = useState('');
 
+    /* Datos Lados*/
+    const formaPago = [
+      {
+        cardId: '1',
+        names: 'VISA'
+      },
+      {
+        cardId: '2',
+        names: 'MASTERCARD'
+      },
+      {
+        cardId: '3',
+        names: 'DINERS'
+      },
+      {
+        cardId: '4',
+        names: 'YAPE'
+      },
+      {
+        cardId: '5',
+        names: 'AMERICAN EXPRESS'
+      },
+      {
+        cardId: '6',
+        names: 'PLIN'
+      },
+    ];
+
+   
+
   /* Modal de Boleta*/
   const [isModalBoletaOpen, setIsModalBoletaOpen] = useState(false);
   const [inputPlaca, setPlaca] = useState('');
@@ -60,6 +89,7 @@ const Home = () => {
   const [inputPagoEfectivo, setPagoEfectivo] = useState('');
   const [errorNOperacion, setErrorNOperacion] = useState('');
   const [errorPagoEfectivo, setErrorPagoEfectivo] = useState('');
+  
 
   /* Modal de Factura*/
   const [isModalFacturaOpen, setIsModalFacturaOpen] = useState(false);
@@ -72,8 +102,9 @@ const Home = () => {
   const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
 
-  /* Datos Lados*/
-  const opciones = ['VISA', 'MASTERCARD', 'DINERS','YAPE','AMERICAN EXPRESS','PLIN'];
+ 
+
+
 
   /* Datos Lados*/
   const cards_lados = [
@@ -162,6 +193,88 @@ const Home = () => {
    
    
   ];
+
+  /* Datos de Transacciones*/
+  const detalleVenta = [
+    {
+      cara: '01',
+      tipoPago: 'E',
+      impuesto: '18.0',
+      nroPlaca:'',
+      tarjetaPuntos:'',
+      clienteID:'',
+      clienteRUC:'',
+      clienteRS:'',
+      clienteDR:'',
+      tarjetaND:'',
+      tarjetaCredito:'',
+      operacionREF:'',
+      observacion:'',
+      kilometraje:'',
+      montoSoles:'0.00',
+      mtoSaldoCredito:'0.0',
+      ptosDisponible:'0.0'
+    },
+    {
+      cara: '02',
+      tipoPago: 'E',
+      impuesto: '18.0',
+      nroPlaca:'',
+      tarjetaPuntos:'',
+      clienteID:'',
+      clienteRUC:'',
+      clienteRS:'',
+      clienteDR:'',
+      tarjetaND:'',
+      tarjetaCredito:'',
+      operacionREF:'',
+      observacion:'',
+      kilometraje:'',
+      montoSoles:'0.00',
+      mtoSaldoCredito:'0.0',
+      ptosDisponible:'0.0'
+    },
+    {
+      cara: '03',
+      tipoPago: 'E',
+      impuesto: '18.0',
+      nroPlaca:'',
+      tarjetaPuntos:'',
+      clienteID:'',
+      clienteRUC:'',
+      clienteRS:'',
+      clienteDR:'',
+      tarjetaND:'',
+      tarjetaCredito:'',
+      operacionREF:'',
+      observacion:'',
+      kilometraje:'',
+      montoSoles:'0.00',
+      mtoSaldoCredito:'0.0',
+      ptosDisponible:'0.0'
+    },
+    {
+      cara: '04',
+      tipoPago: 'E',
+      impuesto: '18.0',
+      nroPlaca:'',
+      tarjetaPuntos:'',
+      clienteID:'',
+      clienteRUC:'',
+      clienteRS:'',
+      clienteDR:'',
+      tarjetaND:'',
+      tarjetaCredito:'',
+      operacionREF:'',
+      observacion:'',
+      kilometraje:'',
+      montoSoles:'0.00',
+      mtoSaldoCredito:'0.0',
+      ptosDisponible:'0.0'
+    },
+  ]
+
+  const [detalleVentaList, setDetalleVentaList] = useState(detalleVenta);
 
   /* Filtrar Lados para mostrar Mangueras*/
   const mangueraFiltrados = filtroLado === '' ? cards_mangueras : cards_mangueras.filter(manguera => manguera.nroLado === filtroLado);
@@ -525,7 +638,7 @@ const Home = () => {
       setPagoEfectivo('0');
 
       setSelectedOption('Efectivo');
-      setSelectedOptionFPago(opciones[0]);
+      setSelectedOptionFPago(formaPago[0].cardId);
 
       setErrorPlaca('');
       setErrorDNI('');
@@ -537,24 +650,51 @@ const Home = () => {
   };
   
      /* Guardar Modal Boleta*/
-  
-    const handleSubmitBoleta = (e) => {
-  
+
+     const handleSubmitBoleta = (e) => {
       e.preventDefault();
     
       if (handleValidationBoleta()) {
-  
+        detalleVentaList.forEach((detalleVenta) => {
+          if (detalleVenta.cara === filtroLado) {
+
+            detalleVenta.tipoPago        = selectedOption.substring(0,1);
+            detalleVenta.impuesto        = '18.0';
+            detalleVenta.nroPlaca        = inputPlaca;
+            detalleVenta.tarjetaPuntos   = '';
+            detalleVenta.clienteID       = inputDNI;
+            detalleVenta.clienteRUC      = '';
+            detalleVenta.clienteRS       = inputNombre;
+            detalleVenta.clienteDR       = inputDireccion;
+            detalleVenta.tarjetaND       = '';
+            detalleVenta.tarjetaCredito  = '';
+            detalleVenta.operacionREF    = '';
+            detalleVenta.observacion     = inputObservacion;
+            detalleVenta.kilometraje     = '';
+            detalleVenta.montoSoles      = '0.00';
+            detalleVenta.mtoSaldoCredito = '0.0';
+            detalleVenta.ptosDisponible  ='0.0';
+
+            if (selectedOption === 'Tarjeta') {
+              detalleVenta.tarjetaCredito = selectedOptionFPago;
+              detalleVenta.operacionREF   = inputNOperacion;
+              detalleVenta.montoSoles     = inputPagoEfectivo;
+            }else if (selectedOption === 'Credito') {
+              detalleVenta.montoSoles     = inputPagoEfectivo;
+            }
+
+             setDetalleVentaList([...detalleVentaList]);
+          }
+
+        });
+    
         setShowAlertSuccess(true);
-  
+    
         setTimeout(() => {
-  
           setShowAlertSuccess(false);
-         handleModalBoletaClose();
-          
+          handleModalBoletaClose();
         }, 1000);
-  
       }
-  
     };
 
       /* Modal Factura */
@@ -671,7 +811,7 @@ const Home = () => {
         setPagoEfectivo('0');
   
         setSelectedOption('Efectivo');
-        setSelectedOptionFPago(opciones[0]);
+        setSelectedOptionFPago(formaPago[0].cardId);
   
         setErrorPlaca('');
         setErrorRUC('');
@@ -685,6 +825,8 @@ const Home = () => {
        /* Guardar Modal Boleta*/
     
       const handleSubmitFactura = (e) => {
+
+
     
         e.preventDefault();
       
@@ -799,6 +941,51 @@ const Home = () => {
                 {/* Campo de Transacciones*/}
                 <div className="card">
                   <h3 className="inner-title">Transacciones</h3>
+                  <div className="inner-cards">
+                    <div className="transaction-table-container">
+                      <div className='datos_transacciones'>
+                        <p className='text_dato'>LADO</p>
+                        <p className='text_dato'>T.PAGO</p>
+                        <p className='text_dato'>IMPUESTO</p>
+                        <p className='text_dato'>PLACA</p>
+                        <p className='text_dato'>T.PUNTOS</p>
+                        <p className='text_dato'>CLIENTE ID</p>
+                        <p className='text_dato'>RUC</p>
+                        <p className='text_dato'>RAZÓN SOCIAL</p>
+                        <p className='text_dato'>DIRECCIÓN</p>
+                        <p className='text_dato'>TARJ. NDESPACHO</p>
+                        <p className='text_dato'>TARJ. CREDITO</p>
+                        <p className='text_dato'>NRO. OPE.</p>
+                        <p className='text_dato'>OBSERVACIÓN</p>
+                        <p className='text_dato'>KILOMETRAJE</p>
+                        <p className='text_dato'>EFECTIVO</p>
+                        <p className='text_dato'>SALDO CREDITO</p>
+                        <p className='text_dato'>PTOS. DISPONIBLES</p>
+                      </div>
+
+                      {detalleVentaList.map((detalleVenta, index) => (
+                        <div className='datosP_transacciones'>
+                          <p className='text_datoP'>{detalleVenta.cara}</p>
+                          <p className='text_datoP'>{detalleVenta.tipoPago}</p>
+                          <p className='text_datoP'>{detalleVenta.impuesto}</p>
+                          <p className='text_datoP'>{detalleVenta.nroPlaca}</p>
+                          <p className='text_datoP'>{detalleVenta.tarjetaPuntos}</p>
+                          <p className='text_datoP'>{detalleVenta.clienteID}</p>
+                          <p className='text_datoP'>{detalleVenta.clienteRUC}</p>
+                          <p className='text_datoP'>{detalleVenta.clienteRS}</p>
+                          <p className='text_datoP'>{detalleVenta.clienteDR}</p>
+                          <p className='text_datoP'>{detalleVenta.tarjetaND}</p>
+                          <p className='text_datoP'>{detalleVenta.tarjetaCredito}</p>
+                          <p className='text_datoP'>{detalleVenta.operacionREF}</p>
+                          <p className='text_datoP'>{detalleVenta.observacion}</p>
+                          <p className='text_datoP'>{detalleVenta.kilometraje}</p>
+                          <p className='text_datoP'>{detalleVenta.montoSoles}</p>
+                          <p className='text_datoP'>{detalleVenta.mtoSaldoCredito}</p>
+                          <p className='text_datoP'>{detalleVenta.ptosDisponible}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 {/* Modal Libre*/}
@@ -973,8 +1160,8 @@ const Home = () => {
                               <InputLabel htmlFor="outlined-age-native-simple">Seleccion Tipo de Pago</InputLabel>
                               <Select native value={selectedOptionFPago} onChange={handleOptionChangeFPago} label="Seleccion Tipo de Pago">
 
-                                {opciones.map((opcion, index) => (
-                                  <option key={index} value={opcion}>{opcion}</option>                      
+                                {formaPago.map((formapagos, index) => (
+                                  <option key={index} value={formapagos.cardId} >{formapagos.names}</option>                      
                                 ))}
                             
                               </Select>
@@ -1112,13 +1299,12 @@ const Home = () => {
                               <InputLabel htmlFor="outlined-age-native-simple">Seleccion Tipo de Pago</InputLabel>
                               <Select native value={selectedOptionFPago} onChange={handleOptionChangeFPago} label="Seleccion Tipo de Pago">
 
-                                {opciones.map((opcion, index) => (
-                                  <option key={index} value={opcion}>{opcion}</option>                      
-                                ))}
+                              {formaPago.map((formapagos, index) => (
+                                <option key={index} value={formapagos.cardId}>{formapagos.names}</option>                      
+                              ))}
                             
                               </Select>
                             </FormControl>
-                          
                             <TextField 
                               type="text"
                               className="campo_input"
