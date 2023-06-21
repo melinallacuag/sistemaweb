@@ -53,18 +53,24 @@ const Home = () => {
   const [errorDNI, setErrorDNI] = useState('');
   const [errorNombre, setErrorNombre] = useState('');
 
-   /* Alerta de Correcto o Error*/
-  const [showAlertSuccess, setShowAlertSuccess] = useState(false);
-  const [showAlertError, setShowAlertError] = useState(false);
-
   /* Campos de Seleccion de Forma de Pago*/
   const [selectedOption, setSelectedOption] = useState('Efectivo');
+  const [selectedOptionFPago, setSelectedOptionFPago] = useState('');
   const [inputNOperacion, setNOperacion] = useState('');
   const [inputPagoEfectivo, setPagoEfectivo] = useState('');
   const [errorNOperacion, setErrorNOperacion] = useState('');
   const [errorPagoEfectivo, setErrorPagoEfectivo] = useState('');
 
-  const [selectedOptionFPago, setSelectedOptionFPago] = useState('');
+  /* Modal de Factura*/
+  const [isModalFacturaOpen, setIsModalFacturaOpen] = useState(false);
+  const [inputRUC, setRUC] = useState('');
+  const [inputRSocial, setRSocial] = useState('');
+  const [errorRUC, setErrorRUC] = useState('');
+  const [errorRSocial, setErrorRSocial] = useState('');
+
+  /* Alerta de Correcto o Error*/
+  const [showAlertSuccess, setShowAlertSuccess] = useState(false);
+  const [showAlertError, setShowAlertError] = useState(false);
 
   /* Datos Lados*/
   const opciones = ['VISA', 'MASTERCARD', 'DINERS','YAPE','AMERICAN EXPRESS','PLIN'];
@@ -443,7 +449,7 @@ const Home = () => {
       setSelectedOptionFPago(event.target.value);
     };
 
-    /* Validar Modal de Galones*/
+    /* Validar Modal de Boleta*/
     const handleValidationBoleta = () => {
 
       let isValid = true;
@@ -458,7 +464,7 @@ const Home = () => {
       if (inputDNI === '') {
         setErrorDNI('El campo DNI es obligatorio');
         isValid = false;
-      } else if (inputDNI < 8) {
+      } else if (inputDNI.length < 8) {
         setErrorDNI('El campo DNI debe tener 8 dígitos');
         isValid = false;
       }else {
@@ -472,27 +478,42 @@ const Home = () => {
         setErrorNombre('');
       }
 
-      if (inputNOperacion === '') {
-        setErrorNOperacion('El campo N° de Operación es obligatorio');
-        isValid = false;
-      } else if (inputNOperacion < 4) {
-        setErrorNOperacion('El N° Operación debe tener 4 dígitos');
-        isValid = false;
-      }else {
-        setErrorNOperacion('');
+      if (selectedOption === 'Tarjeta') {
+
+        if (inputNOperacion === '') {
+          setErrorNOperacion('El campo N° de Operación es obligatorio');
+          isValid = false;
+        } else if (inputNOperacion.length < 4) {
+          setErrorNOperacion('El N° Operación debe tener 4 dígitos');
+          isValid = false;
+        }else {
+          setErrorNOperacion('');
+        }
+
+        if (inputPagoEfectivo === '') {
+          setErrorPagoEfectivo('El campo Pago Efectivo es obligatorio');
+          isValid = false;
+        }else {
+          setErrorPagoEfectivo('');
+        }
+
       }
 
-      if (inputPagoEfectivo === '') {
-        setErrorPagoEfectivo('El campo Pago Efectivo es obligatorio');
-        isValid = false;
-      }else {
-        setErrorPagoEfectivo('');
+      if (selectedOption === 'Credito') {
+
+        if (inputPagoEfectivo === '') {
+          setErrorPagoEfectivo('El campo Pago Efectivo es obligatorio');
+          isValid = false;
+        }else {
+          setErrorPagoEfectivo('');
+        }
+        
       }
   
       return isValid;
     };
 
-     /* Resetear Modal Galones */
+     /* Resetear Modal Boleta */
   const resetFormBoleta = () => {
 
       setPlaca('000-0000');
@@ -515,7 +536,7 @@ const Home = () => {
   
   };
   
-     /* Guardar Modal Galones*/
+     /* Guardar Modal Boleta*/
   
     const handleSubmitBoleta = (e) => {
   
@@ -536,10 +557,159 @@ const Home = () => {
   
     };
 
+      /* Modal Factura */
+  const handleModalFacturaOpen = () => {
+
+    if (isLadoMangueraSelected) {
+      resetFormFactura();
+      setIsModalFacturaOpen(true);
+
+    } else {
+      setShowAlertError(true);
+
+      setTimeout(() => {
+        setShowAlertError(false);
+      }, 1500); 
+
+    }
+
+  };
+  
+  const handleModalFacturaClose = () => {
+    setIsModalFacturaOpen(false);
+  };
+
+   /* Inicio de Datos del Formulario*/
+  
+  const handleRUCChange = (e) => {
+    const value = e.target.value.replace(/\D/, '').slice(0, 11);
+    setRUC(value);
+    setErrorRUC('');
+  };
+
+  const handleRSocialChange = (event) => {
+    setRSocial(event.target.value);
+    setErrorRSocial('');
+  };
+
+      /* Validar Modal de Boleta*/
+      const handleValidationFactura = () => {
+
+        let isValid = true;
+    
+        if (inputPlaca === '') {
+          setErrorPlaca('El campo Placa es obligatorio');
+          isValid = false;
+        }else {
+          setErrorPlaca('');
+        }
+        
+        if (inputRUC === '') {
+          setErrorRUC('El campo RUC es obligatorio');
+          isValid = false;
+        } else if (inputRUC.length < 11) {
+          setErrorRUC('El campo RUC debe tener 8 dígitos');
+          isValid = false;
+        }else {
+          setErrorRUC('');
+        }
+         
+        if (inputRSocial === '') {
+          setErrorRSocial('El campo Razon Social es obligatorio');
+          isValid = false;
+        }else {
+          setErrorRSocial('');
+        }
+
+        if (selectedOption === 'Tarjeta') {
+
+          if (inputNOperacion === '') {
+            setErrorNOperacion('El campo N° de Operación es obligatorio');
+            isValid = false;
+          } else if (inputNOperacion.length < 4) {
+            setErrorNOperacion('El N° Operación debe tener 4 dígitos');
+            isValid = false;
+          }else {
+            setErrorNOperacion('');
+          }
+
+          if (inputPagoEfectivo === '') {
+            setErrorPagoEfectivo('El campo Pago Efectivo es obligatorio');
+            isValid = false;
+          }else {
+            setErrorPagoEfectivo('');
+          }
+
+        }
+
+        if (selectedOption === 'Credito') {
+
+          if (inputPagoEfectivo === '') {
+            setErrorPagoEfectivo('El campo Pago Efectivo es obligatorio');
+            isValid = false;
+          }else {
+            setErrorPagoEfectivo('');
+          }
+          
+        }
+        
+  
+      
+    
+        return isValid;
+      };
+  
+       /* Resetear Modal Boleta */
+    const resetFormFactura = () => {
+  
+        setPlaca('000-0000');
+        setRUC('');
+        setRSocial('');
+        setDireccion('');
+        setObservacion('');
+        setNOperacion('');
+        setPagoEfectivo('0');
+  
+        setSelectedOption('Efectivo');
+        setSelectedOptionFPago(opciones[0]);
+  
+        setErrorPlaca('');
+        setErrorRUC('');
+        setErrorRSocial('');
+        setErrorNOperacion('');
+        setErrorPagoEfectivo('');
+        setShowAlertSuccess(false);
+    
+    };
+    
+       /* Guardar Modal Boleta*/
+    
+      const handleSubmitFactura = (e) => {
+    
+        e.preventDefault();
+      
+        if (handleValidationFactura()) {
+    
+          setShowAlertSuccess(true);
+    
+          setTimeout(() => {
+    
+            setShowAlertSuccess(false);
+           handleModalFacturaClose();
+            
+          }, 1000);
+    
+        }
+    
+      };
+
   
 
   const DNICharacterCount = inputDNI.length;
   const NombreCharacterCount = inputNombre.length;
+
+  const RUCCharacterCount = inputRUC.length;
+  const RSocialCharacterCount = inputRSocial.length;
   
   return (
     <div className='app'>
@@ -618,7 +788,7 @@ const Home = () => {
                   <h3 className="inner-title">Operación</h3>
                   <div className="inner-cards">
                     <button className='btn_cards' onClick={handleModalBoletaOpen}>boleta</button>
-                    <button className='btn_cards'>FACTURA</button>
+                    <button className='btn_cards' onClick={handleModalFacturaOpen}>FACTURA</button>
                     <button className='btn_cards'>N/DESPACHO</button>
                     <button className='btn_cards'>SERAFÍN</button>
                     <button className='btn_cards'>PUNTOS</button>
@@ -726,7 +896,7 @@ const Home = () => {
                 </Dialog>
 
                 {/* Modal Boleta*/}
-                <Dialog open={isModalBoletaOpen} onClose={handleModalBoletaClose}>
+                <Dialog open={isModalBoletaOpen} onClose={handleModalBoletaClose} >
 
                   <DialogTitle>Boleta</DialogTitle>
 
@@ -740,7 +910,7 @@ const Home = () => {
                         </div>
                       )}
 
-                        <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth  style={{ height: '40px' }} />  
+                        <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
 
                         <TextField type="text" className='campo_input' value={inputDNI} onChange={handleDNIChange} margin="normal" label="Ingresar DNI" fullWidth /> 
                         <p className="character-count">{DNICharacterCount}/8</p>
@@ -810,7 +980,7 @@ const Home = () => {
                               </Select>
                             </FormControl>
                           
-                            <TextField
+                            <TextField 
                               type="text"
                               className="campo_input"
                               value={inputNOperacion}
@@ -857,11 +1027,151 @@ const Home = () => {
                     </DialogContent>
 
                   <DialogActions>
+ 
                     <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalBoletaClose}>Cancelar</Button>
                     <Button variant="contained" color="primary"  onClick={handleSubmitBoleta} >Aceptar</Button>
                   </DialogActions>
 
                 </Dialog>
+
+                 {/* Modal Factura*/}
+                 <Dialog open={isModalFacturaOpen} onClose={handleModalFacturaClose} >
+
+                  <DialogTitle>Factura</DialogTitle>
+
+                    <DialogContent>
+
+                      {(errorPlaca || errorRUC ||   errorRSocial ) && (
+                      <div className={`floating-alertErrorInput ${errorPlaca ? 'show' : ''} ${errorRUC ? 'show' : ''}  ${errorRSocial ? 'show' : ''} `}>
+                          {errorPlaca && <p className="alert-errorInput">{errorPlaca}</p>}
+                          {errorRUC && <p className="alert-errorInput">{errorRUC}</p>}
+                          {errorRSocial && <p className="alert-errorInput">{errorRSocial}</p>}
+                        </div>
+                      )}
+
+                        <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
+
+                        <TextField type="text" className='campo_input' value={inputRUC} onChange={handleRUCChange} margin="normal" label="Ingresar RUC" fullWidth /> 
+                        <p className="character-count">{RUCCharacterCount}/11</p>
+
+                        <TextField type="text" className='campo_input' value={inputRSocial} onChange={handleRSocialChange} margin="normal" label="Ingresar Razón Social" fullWidth /> 
+                        <p className="character-count">{RSocialCharacterCount}</p>
+                        
+                        <TextField type="text" className='campo_input' value={inputDireccion} onChange={handleDireccionChange} margin="normal" label="Ingresar Dirección" fullWidth /> 
+                        
+                        <TextField type="text" className='campo_input' value={inputObservacion} onChange={handleObservacionChange} margin="normal" label="Ingresar Observación" fullWidth /> 
+
+                        <p className='fpago_text' >Forma de Pago:</p>
+
+                        <RadioGroup
+                          aria-label="Opciones"
+                          name="opciones"
+                          value={selectedOption}
+                          onChange={handleOptionChange} >
+
+                          <FormGroup row style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+
+                            <FormControlLabel
+                              value="Efectivo"
+                              control={<Radio />}
+                              label="Efectivo"
+                            />
+                            <FormControlLabel
+                              value="Tarjeta"
+                              control={<Radio />}
+                              label="Tarjeta"
+                            />
+                            <FormControlLabel
+                              value="Credito"
+                              control={<Radio />}
+                              label="Credito"
+                            />
+
+                          </FormGroup>
+                        
+                        </RadioGroup>
+
+                        {selectedOption === 'Efectivo' && (
+                          <>
+                            <div className='inf_pagoefectivo'>
+                              <p className='inf_text'>Se realizara el modo de Pago en Efectivo</p>
+                            </div>
+                          </>  
+                        )}
+
+                        {selectedOption === 'Tarjeta' && (
+                          <>
+                            {(errorNOperacion || errorPagoEfectivo) && (
+                              <div className={`floating-alertErrorInput ${errorNOperacion ? 'show' : ''}  ${errorPagoEfectivo ? 'show' : ''} `}>
+                                  {errorNOperacion && <p className="alert-errorInput">{errorNOperacion}</p>}
+                                  {errorPagoEfectivo && <p className="alert-errorInput">{errorPagoEfectivo}</p>}
+                              </div>
+                            )}
+
+                            <FormControl variant="outlined" fullWidth>
+                              <InputLabel htmlFor="outlined-age-native-simple">Seleccion Tipo de Pago</InputLabel>
+                              <Select native value={selectedOptionFPago} onChange={handleOptionChangeFPago} label="Seleccion Tipo de Pago">
+
+                                {opciones.map((opcion, index) => (
+                                  <option key={index} value={opcion}>{opcion}</option>                      
+                                ))}
+                            
+                              </Select>
+                            </FormControl>
+                          
+                            <TextField 
+                              type="text"
+                              className="campo_input"
+                              value={inputNOperacion}
+                              onChange={handleNOperacionChange}
+                              margin="normal"
+                              label="Ingresar N° de Operación"
+                              fullWidth/>
+
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputPagoEfectivo}
+                              onChange={handlePagoEfectivoChange}
+                              margin="normal"
+                              label="Ingresar Pago Efectivo"
+                              fullWidth/>
+
+                          </>
+                        )}
+
+                        {selectedOption === 'Credito' && (
+                          <>
+                            {( errorPagoEfectivo) && (
+                              <div className={`floating-alertErrorInput ${errorPagoEfectivo ? 'show' : ''} `}>
+                                  {errorPagoEfectivo && <p className="alert-errorInput">{errorPagoEfectivo}</p>}
+                              </div>
+                            )}
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputPagoEfectivo}
+                              onChange={handlePagoEfectivoChange}
+                              margin="normal"
+                              label="Ingresar Pago Efectivo"
+                              fullWidth/>
+                          </>
+                        )}
+
+                      {showAlertSuccess && (
+                        <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
+                          <p className="alert-success">Se guardó correctamente</p>
+                        </div>
+                      )}
+                    </DialogContent>
+
+                  <DialogActions>
+
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalFacturaClose}>Cancelar</Button>
+                    <Button variant="contained" color="primary"  onClick={handleSubmitFactura} >Aceptar</Button>
+                  </DialogActions>
+
+                  </Dialog>
           
           </div>
       </div>   
