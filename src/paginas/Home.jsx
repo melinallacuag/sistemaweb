@@ -826,11 +826,42 @@ const Home = () => {
     
       const handleSubmitFactura = (e) => {
 
-
-    
         e.preventDefault();
       
         if (handleValidationFactura()) {
+
+          detalleVentaList.forEach((detalleVenta) => {
+            if (detalleVenta.cara === filtroLado) {
+  
+              detalleVenta.tipoPago        = selectedOption.substring(0,1);
+              detalleVenta.impuesto        = '18.0';
+              detalleVenta.nroPlaca        = inputPlaca;
+              detalleVenta.tarjetaPuntos   = '';
+              detalleVenta.clienteID       = '';
+              detalleVenta.clienteRUC      = inputRUC;
+              detalleVenta.clienteRS       = inputRSocial;
+              detalleVenta.clienteDR       = inputDireccion;
+              detalleVenta.tarjetaND       = '';
+              detalleVenta.tarjetaCredito  = '';
+              detalleVenta.operacionREF    = '';
+              detalleVenta.observacion     = inputObservacion;
+              detalleVenta.kilometraje     = '';
+              detalleVenta.montoSoles      = '0.00';
+              detalleVenta.mtoSaldoCredito = '0.0';
+              detalleVenta.ptosDisponible  ='0.0';
+  
+              if (selectedOption === 'Tarjeta') {
+                detalleVenta.tarjetaCredito = selectedOptionFPago;
+                detalleVenta.operacionREF   = inputNOperacion;
+                detalleVenta.montoSoles     = inputPagoEfectivo;
+              }else if (selectedOption === 'Credito') {
+                detalleVenta.montoSoles     = inputPagoEfectivo;
+              }
+  
+               setDetalleVentaList([...detalleVentaList]);
+            }
+  
+          });
     
           setShowAlertSuccess(true);
     
