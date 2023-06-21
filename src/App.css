@@ -113,6 +113,16 @@
   white-space: nowrap;
 }
 
+.datosP_transacciones{
+
+  min-width: fit-content;
+  
+
+}
+.text_datoP{
+  white-space: nowrap;
+}
+
   
 }
 
@@ -544,14 +554,14 @@ button:disabled {
   border-radius: 0.5rem;
   height: 35px;
   margin-bottom: 0.35rem;
-  padding-left: 0.35rem;
+  padding-left: 0.2rem;
   padding-right: 0.35rem;
 }
 .text_dato{
   text-align: center;
   color: #fff;
-  font-size: 0.55rem;
-  font-weight: bold;
+  font-size: 0.5rem;
+  font-weight: 600;
 }
 
 .datosP_transacciones{
@@ -563,14 +573,14 @@ button:disabled {
   border-radius: 0.5rem;
   height: 35px;
   margin-bottom: 0.35rem;
-  padding-left: 0.35rem;
+  padding-left: 0.2rem;
   padding-right: 0.35rem;
 }
 .text_datoP{
   text-align: center;
   color: #171616;
-  font-size: 0.55rem;
-  font-weight: bold;
+  font-size: 0.5rem;
+  font-weight: 700;
 }
 
 .transaction-table-container::-webkit-scrollbar {

@@ -975,44 +975,44 @@ const Home = () => {
                   <div className="inner-cards">
                     <div className="transaction-table-container">
                       <div className='datos_transacciones'>
-                        <p className='text_dato'>LADO</p>
-                        <p className='text_dato'>T.PAGO</p>
-                        <p className='text_dato'>IMPUESTO</p>
-                        <p className='text_dato'>PLACA</p>
-                        <p className='text_dato'>T.PUNTOS</p>
-                        <p className='text_dato'>CLIENTE ID</p>
-                        <p className='text_dato'>RUC</p>
-                        <p className='text_dato'>RAZÓN SOCIAL</p>
-                        <p className='text_dato'>DIRECCIÓN</p>
-                        <p className='text_dato'>TARJ. NDESPACHO</p>
-                        <p className='text_dato'>TARJ. CREDITO</p>
-                        <p className='text_dato'>NRO. OPE.</p>
-                        <p className='text_dato'>OBSERVACIÓN</p>
-                        <p className='text_dato'>KILOMETRAJE</p>
-                        <p className='text_dato'>EFECTIVO</p>
-                        <p className='text_dato'>SALDO CREDITO</p>
-                        <p className='text_dato'>PTOS. DISPONIBLES</p>
+                        <p className='text_dato' style={{width: '40px'}}>LADO</p>
+                        <p className='text_dato' style={{width: '40px'}}>T.PAGO</p>
+                        <p className='text_dato' style={{width: '40px'}}>IMPUESTO</p>
+                        <p className='text_dato' style={{width: '40px'}}>PLACA</p>
+                        <p className='text_dato' style={{width: '50px'}}>T.PUNTOS</p>
+                        <p className='text_dato' style={{width: '80px'}}>CLIENTE ID</p>
+                        <p className='text_dato' style={{width: '80px'}}>RUC</p>
+                        <p className='text_dato' style={{width: '120px'}}>RAZÓN SOCIAL</p>
+                        <p className='text_dato' style={{width: '120px'}}>DIRECCIÓN</p>
+                        <p className='text_dato' style={{width: '50px'}}>TARJ. NDESPACHO</p>
+                        <p className='text_dato' style={{width: '50px'}}>TARJ. CREDITO</p>
+                        <p className='text_dato' style={{width: '50px'}}>NRO. OPE.</p>
+                        <p className='text_dato' style={{width: '80px'}}>OBSERVACIÓN</p>
+                        <p className='text_dato' style={{width: '50px'}}>KILOMETRAJE</p>
+                        <p className='text_dato' style={{width: '70px'}}>EFECTIVO</p>
+                        <p className='text_dato' style={{width: '70px'}}>SALDO CREDITO</p>
+                        <p className='text_dato' style={{width: '70px'}}>PTOS. DISPONIBLES</p>
                       </div>
 
                       {detalleVentaList.map((detalleVenta, index) => (
                         <div className='datosP_transacciones'>
-                          <p className='text_datoP'>{detalleVenta.cara}</p>
-                          <p className='text_datoP'>{detalleVenta.tipoPago}</p>
-                          <p className='text_datoP'>{detalleVenta.impuesto}</p>
-                          <p className='text_datoP'>{detalleVenta.nroPlaca}</p>
-                          <p className='text_datoP'>{detalleVenta.tarjetaPuntos}</p>
-                          <p className='text_datoP'>{detalleVenta.clienteID}</p>
-                          <p className='text_datoP'>{detalleVenta.clienteRUC}</p>
-                          <p className='text_datoP'>{detalleVenta.clienteRS}</p>
-                          <p className='text_datoP'>{detalleVenta.clienteDR}</p>
-                          <p className='text_datoP'>{detalleVenta.tarjetaND}</p>
-                          <p className='text_datoP'>{detalleVenta.tarjetaCredito}</p>
-                          <p className='text_datoP'>{detalleVenta.operacionREF}</p>
-                          <p className='text_datoP'>{detalleVenta.observacion}</p>
-                          <p className='text_datoP'>{detalleVenta.kilometraje}</p>
-                          <p className='text_datoP'>{detalleVenta.montoSoles}</p>
-                          <p className='text_datoP'>{detalleVenta.mtoSaldoCredito}</p>
-                          <p className='text_datoP'>{detalleVenta.ptosDisponible}</p>
+                          <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.cara}</p>
+                          <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.tipoPago}</p>
+                          <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.impuesto}</p>
+                          <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.nroPlaca}</p>
+                          <p className='text_datoP' style={{width: '50px'}}>{detalleVenta.tarjetaPuntos}</p>
+                          <p className='text_datoP' style={{width: '80px'}}>{detalleVenta.clienteID}</p>
+                          <p className='text_datoP' style={{width: '80px'}}>{detalleVenta.clienteRUC}</p>
+                          <p className='text_datoP' style={{width: '120px'}}>{detalleVenta.clienteRS}</p>
+                          <p className='text_datoP' style={{width: '120px'}}>{detalleVenta.clienteDR}</p>
+                          <p className='text_datoP' style={{width: '50px'}}>{detalleVenta.tarjetaND}</p>
+                          <p className='text_datoP' style={{width: '50px'}}>{detalleVenta.tarjetaCredito}</p>
+                          <p className='text_datoP' style={{width: '50px'}}>{detalleVenta.operacionREF}</p>
+                          <p className='text_datoP' style={{width: '80px'}}>{detalleVenta.observacion}</p>
+                          <p className='text_datoP' style={{width: '50px'}}>{detalleVenta.kilometraje}</p>
+                          <p className='text_datoP' style={{width: '70px'}}>{detalleVenta.montoSoles}</p>
+                          <p className='text_datoP' style={{width: '70px'}}>{detalleVenta.mtoSaldoCredito}</p>
+                          <p className='text_datoP' style={{width: '70px'}}>{detalleVenta.ptosDisponible}</p>
                         </div>
                       ))}
                     </div>
