@@ -31,8 +31,18 @@ const SidebarV = () => {
   return (
     <div>
       <nav className="horizontal-navbar" >
-        <div className="logo">Logo</div>
-        <div className="profile" onClick={handleLogout}>Perfil</div>
+
+        <div className="container_user">
+          <p  className="text_username">Fecha:</p>
+          <p  className="text_username">Turno:  - </p>
+        </div>
+
+        <div className="container_user">
+          <p  className="text_username" onClick={handleLogout}>Cajero1</p>
+          <img src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_profile.svg" alt="img_perfil" className='img_username' />
+        </div>
+  
+     {/*  <div className="profile" onClick={handleLogout}>Perfil</div> */}  
       </nav>
       
     </div>

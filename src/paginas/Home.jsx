@@ -978,7 +978,7 @@ const Home = () => {
                         <p className='text_dato' style={{width: '40px'}}>LADO</p>
                         <p className='text_dato' style={{width: '40px'}}>T.PAGO</p>
                         <p className='text_dato' style={{width: '40px'}}>IMPUESTO</p>
-                        <p className='text_dato' style={{width: '40px'}}>PLACA</p>
+                        <p className='text_dato' style={{width: '50px'}}>PLACA</p>
                         <p className='text_dato' style={{width: '50px'}}>T.PUNTOS</p>
                         <p className='text_dato' style={{width: '80px'}}>CLIENTE ID</p>
                         <p className='text_dato' style={{width: '80px'}}>RUC</p>
@@ -999,7 +999,7 @@ const Home = () => {
                           <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.cara}</p>
                           <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.tipoPago}</p>
                           <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.impuesto}</p>
-                          <p className='text_datoP' style={{width: '40px'}}>{detalleVenta.nroPlaca}</p>
+                          <p className='text_datoP' style={{width: '60px'}}>{detalleVenta.nroPlaca}</p>
                           <p className='text_datoP' style={{width: '50px'}}>{detalleVenta.tarjetaPuntos}</p>
                           <p className='text_datoP' style={{width: '80px'}}>{detalleVenta.clienteID}</p>
                           <p className='text_datoP' style={{width: '80px'}}>{detalleVenta.clienteRUC}</p>

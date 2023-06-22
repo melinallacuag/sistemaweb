@@ -134,7 +134,7 @@
   background-color: #fff;
   padding: 10px;
   gap: 10px;
-  height: 8vh;
+  height: 5vh;
 }
 
 .horizontal-navbar .logo {
@@ -555,7 +555,7 @@ button:disabled {
   height: 35px;
   margin-bottom: 0.35rem;
   padding-left: 0.2rem;
-  padding-right: 0.35rem;
+  padding-right: 0.2rem;
 }
 .text_dato{
   text-align: center;
@@ -574,7 +574,7 @@ button:disabled {
   height: 35px;
   margin-bottom: 0.35rem;
   padding-left: 0.2rem;
-  padding-right: 0.35rem;
+  padding-right: 0.2rem;
 }
 .text_datoP{
   text-align: center;
@@ -600,4 +600,22 @@ button:disabled {
 
 .transaction-table-container::-webkit-scrollbar-thumb:hover {
   background: #555; /* color of the scrollbar thumb on hover */
+}
+
+.container_user{
+  display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.text_username{
+  color: #858796;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.img_username{
+  width: 35px;
+  height: 35px;
 }
