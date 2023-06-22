@@ -892,7 +892,7 @@ const Home = () => {
 
           <div className='cont_sliroutes'>
 
-            <SidebarV/>
+            <SidebarV />
 
                 <div className="card-container">      
 

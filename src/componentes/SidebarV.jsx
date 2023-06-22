@@ -3,17 +3,26 @@ import React, {useEffect, useState } from 'react';
 const SidebarV = () => {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [authenticated, setauthenticated] = useState(null);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("authenticated");
     if (loggedInUser) {
-      setauthenticated(loggedInUser);
+      setauthenticated(JSON.parse(loggedInUser));
     }
   }, []);
 
   useEffect(() => {
+    if (authenticated) {
+      setUserName(authenticated.names);
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
     if (authenticated === null) {
-      setSelectedMenu(null); // Restablecer el estado de selectedMenu a null al cerrar sesión
+      setSelectedMenu(null);
+    }else {
+      localStorage.setItem("authenticated", JSON.stringify(authenticated));
     }
   }, [authenticated]);
 
@@ -34,11 +43,11 @@ const SidebarV = () => {
 
         <div className="container_user">
           <p  className="text_username">Fecha:</p>
-          <p  className="text_username">Turno:  - </p>
+          <p  className="text_username"onClick={handleLogout}>Turno:  - </p>
         </div>
 
         <div className="container_user">
-          <p  className="text_username" onClick={handleLogout}>Cajero1</p>
+          <p  className="text_username" >{userName}</p>
           <img src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_profile.svg" alt="img_perfil" className='img_username' />
         </div>
   

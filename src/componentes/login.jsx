@@ -13,8 +13,6 @@ const Login = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') || false);
 
-
-
     const users = [
       {
         userID: '11111118',
@@ -106,6 +104,7 @@ const Login = () => {
     }
   
     const validateForm = () => {
+
       let isValid = true;
 
         if (username.trim() === '') {
@@ -136,10 +135,10 @@ const Login = () => {
           } else{
             setErrorPassword('');
           }
-        
         }
       
       return isValid;
+
     };
   
     const handleUsernameChange = (e) => {
@@ -159,10 +158,11 @@ const Login = () => {
   
       if (validateForm()) {
         setSuccessMessage('Inicio de sesión exitoso');
-  
         setTimeout(() => {
           setSuccessMessage('');
-          localStorage.setItem('authenticated', true);
+          const authenticatedUser = users.find(user => user.userID === username);
+          localStorage.setItem("authenticated", JSON.stringify(authenticatedUser));
+         // localStorage.setItem('authenticated', true);
           setAuthenticated(true);
         }, 3000);
       }
