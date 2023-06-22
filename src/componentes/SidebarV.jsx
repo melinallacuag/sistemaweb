@@ -1,10 +1,14 @@
 import React, {useEffect, useState } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
 const SidebarV = () => {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [authenticated, setauthenticated] = useState(null);
   const [userName, setUserName] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    /* Modal de Libre*/
+    const [isModalCerrarSesionOpen, setIsModalCerrarSesionOpen] = useState(false);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("authenticated");
@@ -39,6 +43,17 @@ const SidebarV = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  /* Modal Cerrar Sesión */
+  const handleModalCerrarSesionOpen = () => {
+ 
+        setIsModalCerrarSesionOpen(true);
+
+  };
+  
+  const handleModalCerrarSesionClose = () => {
+    setIsModalCerrarSesionOpen(false);
+  };
+
   if (!authenticated) {
        
     return null;
@@ -64,11 +79,23 @@ const SidebarV = () => {
           {isDropdownOpen && (
               <div className="dropdown">
                 <ul>
-                  <li onClick={handleLogout}>Cerrar Sesión</li>
+                  <li onClick={handleModalCerrarSesionOpen} >Cerrar Sesión</li>
                 </ul>
               </div>
             
           )}
+          
+          {/* Modal Cerrar Sesion*/}
+            <Dialog open={isModalCerrarSesionOpen} onClose={handleModalCerrarSesionClose}>
+              <DialogTitle>Cerrar Sesión</DialogTitle>
+                <DialogContent>
+                  <p>¿Esta seguro que desea Cerrar Sesión?</p>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalCerrarSesionClose}>Cancelar</Button>
+                  <Button variant="contained" color="primary" onClick={handleLogout}>Aceptar</Button>
+                </DialogActions>
+            </Dialog>
 
         </nav>
         
