@@ -978,7 +978,7 @@ const Home = () => {
                         <p className='text_dato' style={{width: '40px'}}>LADO</p>
                         <p className='text_dato' style={{width: '40px'}}>T.PAGO</p>
                         <p className='text_dato' style={{width: '40px'}}>IMPUESTO</p>
-                        <p className='text_dato' style={{width: '50px'}}>PLACA</p>
+                        <p className='text_dato' style={{width: '60px'}}>PLACA</p>
                         <p className='text_dato' style={{width: '50px'}}>T.PUNTOS</p>
                         <p className='text_dato' style={{width: '80px'}}>CLIENTE ID</p>
                         <p className='text_dato' style={{width: '80px'}}>RUC</p>
