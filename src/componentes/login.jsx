@@ -52,20 +52,20 @@ const Login = () => {
       {
         terminalID: 'PUNTO1',
         imei: 'ebdc4a14802443f2',
-        fecha_Proceso:'23/06/2023',
-        turno: '01'
+        fecha_Proceso:'22/06/2023',
+        turno: 1
       },
       {
         terminalID: 'PUNTO2',
         imei: 'b92f513b2db04125',
         fecha_Proceso:'24/05/2023',
-        turno: '02'
+        turno: 2
       },
       {
         terminalID: 'PUNTO3',
         imei: 'b92f513b2db04123',
         fecha_Proceso:'24/05/2023',
-        turno: '03'
+        turno: 3
       }
     ];
 
@@ -200,14 +200,14 @@ const Login = () => {
             uniqueId = uuidv4().replace(/-/g, '').substring(0, 16);
             localStorage.setItem('uniqueId', uniqueId);
           }
-          setSuccessMessage('');
-          const authenticatedUser = users.find(user => user.userID === username);
-          localStorage.setItem("authenticated", JSON.stringify(authenticatedUser));
-
           const authenticatedTerminal = terminal.find((terminals) => terminals.imei === uniqueId);
           localStorage.setItem('authenticated',JSON.stringify(authenticatedTerminal) );
 
+          const authenticatedUser = users.find(user => user.userID === username);
+          localStorage.setItem("authenticatedUser", JSON.stringify(authenticatedUser));
+
          // localStorage.setItem('authenticated', true);
+         setSuccessMessage('');
           setAuthenticated(true);
         }, 3000);
       }

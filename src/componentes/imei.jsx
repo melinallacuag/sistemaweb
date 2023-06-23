@@ -29,7 +29,7 @@ class UniqueIdGenerator extends React.Component {
     const { uniqueId } = this.state;
 
     return (
-      <div>
+      <div className='App-IMEI'>
          {uniqueId}
       </div>
     );

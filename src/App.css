@@ -508,6 +508,7 @@ width: 100%;
 .App-IMEI{
   font-size: 1rem;
   text-align: center;
+  text-transform: uppercase;
 }
 
 

@@ -13,6 +13,7 @@ const SidebarV = () => {
 
     /* Modal de Libre*/
     const [isModalCerrarSesionOpen, setIsModalCerrarSesionOpen] = useState(false);
+  
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("authenticated");
@@ -26,25 +27,19 @@ const SidebarV = () => {
       setFechaProceso(terminalData.fecha_Proceso);
       setTurno(terminalData.turno);
     }
-  }, []);
 
-  useEffect(() => {
-    if (authenticated) {
-      setUserName(authenticated.names);
+    const loggedInUsers = localStorage.getItem('authenticatedUser');
+    if (loggedInUsers) {
+      const userData = JSON.parse(loggedInUsers);
+      setUserName(userData.names);
     }
-  }, [authenticated]);
+  }, []);
 
   useEffect(() => {
     if (authenticated === null) {
       setSelectedMenu(null);
     }else {
       localStorage.setItem("authenticated", JSON.stringify(authenticated));
-    }
-  }, [authenticated]);
-
-  useEffect(() => {
-    if (authenticated) {
-      setUserName(authenticated.names);
     }
   }, [authenticated]);
 
