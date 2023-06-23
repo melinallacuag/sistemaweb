@@ -709,3 +709,15 @@ button:disabled {
   color: #fff;
   background-color: rgb(210, 211, 219);
 }
+.btn_automatico{
+  width: 100%;
+}
+
+.cont_campos{
+  display: flex;
+  align-items: center;
+}
+.cont_Tcampos{
+  margin-right: 0.5rem;
+  width: 100%;
+}

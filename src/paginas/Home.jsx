@@ -277,6 +277,39 @@ const Home = () => {
     },
   ]
 
+  const LCliente = [
+    {
+      clienteID: '75991278',
+      clienteRUC: '',
+      clienteRZ: 'Melina Llacua Guere',
+      clienteDR: 'Humboth y Precursores'
+    },
+    {
+      clienteID: '75991274',
+      clienteRUC: '',
+      clienteRZ: 'Ermelinda Campos Rojas',
+      clienteDR: 'Los manalteales'
+    },
+    {
+      clienteID: '75481267',
+      clienteRUC: '',
+      clienteRZ: 'Moises Rojas Canchari',
+      clienteDR: ''
+    },
+    {
+      clienteID: '',
+      clienteRUC: '10784595746',
+      clienteRZ: 'Wilmer Capcha Villegas',
+      clienteDR: ''
+    },
+    {
+      clienteID: '65784123',
+      clienteRUC: '',
+      clienteRZ: 'Fernanado Collazos Porras',
+      clienteDR: 'Los angeles'
+    }
+  ];
+
   const [detalleVentaList, setDetalleVentaList] = useState(detalleVenta);
 
   /* Filtrar Lados para mostrar Mangueras*/
@@ -937,6 +970,93 @@ const Home = () => {
     
       };
 
+
+      /* Validar Modal de Boleta por Reniec*/
+      const handleValidationReniec = () => {
+
+        let isValid = true;
+
+        if(inputDNI === ''){
+          setErrorDNI('El campo DNI es obligatorio')
+          isValid = false;
+        }else if(inputDNI.length < 8){
+          setErrorDNI('El campo DNI debe tener 8 dígitos')
+          isValid = false;
+        }else{
+          const reniec = LCliente.find(reniec => reniec.clienteID === inputDNI);
+          if(!reniec){
+            setErrorDNI('No se encontro DNI');
+            isValid = false;
+            setNombre('');
+          }else{
+            setErrorDNI('')
+            setNombre(reniec.clienteRZ);
+          }
+        }
+
+        return isValid;
+      };
+
+      const handleSubmitReniec = (e) => {
+        e.preventDefault();
+      
+        if (handleValidationReniec()) {
+
+
+          setShowAlertSuccess(true);
+
+          setTimeout(() => {
+    
+            setShowAlertSuccess(false);
+            
+          }, 1000);
+    
+        }
+      };
+
+      /* Validar Modal de Boleta por Sunat*/
+      const handleValidationSunat = () => {
+
+        let isValid = true;
+
+        if(inputRUC === ''){
+          setErrorRUC('El campo RUC es obligatorio')
+          isValid = false;
+        }else if(inputRUC.length < 11){
+          setErrorRUC('El campo RUC debe tener 11 dígitos')
+          isValid = false;
+        }else{
+          const sunat = LCliente.find(sunat => sunat.clienteRUC === inputRUC);
+          if(!sunat){
+            setErrorRUC('No se encontro RUC');
+            isValid = false;
+            setRSocial('');
+          }else{
+            setErrorRUC('')
+            setRSocial(sunat.clienteRZ)
+          }
+        }
+
+        return isValid;
+      };
+
+      const handleSubmitSunat = (e) => {
+        e.preventDefault();
+      
+        if (handleValidationSunat()) {
+
+          setShowAlertSuccess(true);
+    
+          setTimeout(() => {
+    
+            setShowAlertSuccess(false);
+            
+          }, 1000);
+    
+        }
+        
+      };
+
   
 
   const DNICharacterCount = inputDNI.length;
@@ -955,7 +1075,20 @@ const Home = () => {
 
             <SidebarV />
 
+                {/* Campo de Stop*/}
+                <div className="card">
+                  <div className="inner-cards">
+                    <div className="transaction-table-container">
+                      <button className='btn_cards btn_automatico'>Automatico</button>
+                    </div>
+                  </div>
+                </div>
+
+
                 <div className="card-container">      
+
+
+
 
                   {/* Campo de Lados*/}
                   <div className="card">
@@ -1190,9 +1323,14 @@ const Home = () => {
                       )}
 
                         <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
-
-                        <TextField type="text" className='campo_input' value={inputDNI} onChange={handleDNIChange} margin="normal" label="Ingresar DNI" fullWidth /> 
-                        <p className="character-count">{DNICharacterCount}/8</p>
+                        
+                        <div className='cont_campos'>
+                          <div className='cont_Tcampos'>
+                            <TextField type="text" className='campo_input' value={inputDNI} onChange={handleDNIChange} margin="normal" label="Ingresar DNI" fullWidth /> 
+                            <p className="character-count">{DNICharacterCount}/8</p>
+                          </div>
+                          <button className='btn_cards'  onClick={handleSubmitReniec} >RENIEC</button>
+                        </div>
 
                         <TextField type="text" className='campo_input' value={inputNombre} onChange={handleNombreChange} margin="normal" label="Ingresar Nombre" fullWidth /> 
                         <p className="character-count">{NombreCharacterCount}</p>
@@ -1330,8 +1468,13 @@ const Home = () => {
 
                         <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
 
-                        <TextField type="text" className='campo_input' value={inputRUC} onChange={handleRUCChange} margin="normal" label="Ingresar RUC" fullWidth /> 
-                        <p className="character-count">{RUCCharacterCount}/11</p>
+                        <div className='cont_campos'>
+                          <div className='cont_Tcampos'>
+                            <TextField type="text" className='campo_input' value={inputRUC} onChange={handleRUCChange} margin="normal" label="Ingresar RUC" fullWidth /> 
+                            <p className="character-count">{RUCCharacterCount}/11</p>
+                          </div>
+                          <button className='btn_cards'  onClick={handleSubmitSunat} >SUNAT</button>
+                        </div>
 
                         <TextField type="text" className='campo_input' value={inputRSocial} onChange={handleRSocialChange} margin="normal" label="Ingresar Razón Social" fullWidth /> 
                         <p className="character-count">{RSocialCharacterCount}</p>
