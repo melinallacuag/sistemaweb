@@ -10,6 +10,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorUsername, setErrorUsername] = useState('');
+    const [errorImei, setErrorImei] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') || false);
@@ -18,7 +19,7 @@ const Login = () => {
       {
         userID: '11111118',
         password: '784',
-        identFID: 'B32809099EBCF35B',
+        identFID: 'ebdc4a14802443f1',
         names: 'CAJERO1',
         phone: '',
         mail: '',
@@ -28,7 +29,7 @@ const Login = () => {
       {
         userID: '11111119',
         password: '784',
-        identFID: 'B32809099EBCF35C',
+        identFID: 'b92f513b2db04125',
         names: 'CAJERO2',
         phone: '',
         mail: '',
@@ -38,7 +39,7 @@ const Login = () => {
       {
         userID: '20593088',
         password: '784',
-        identFID: '',
+        identFID: 'b92f513b2db04123',
         names: 'TITO GALDOS TALAVERANO',
         phone: '',
         mail: '',
@@ -56,13 +57,13 @@ const Login = () => {
       },
       {
         terminalID: 'PUNTO2',
-        imei: '07c179609cb5443f2',
+        imei: 'b92f513b2db04125',
         fecha_Proceso:'24/05/2023',
         turno: '02'
       },
       {
         terminalID: 'PUNTO3',
-        imei: '07c179609cb5443f1',
+        imei: 'b92f513b2db04123',
         fecha_Proceso:'24/05/2023',
         turno: '03'
       }
@@ -158,6 +159,17 @@ const Login = () => {
             setErrorPassword('');
           }
         }
+
+        let uniqueId = localStorage.getItem('uniqueId');
+        const imei = terminal.find((terminals) => terminals.imei === uniqueId);
+        if(!imei){
+
+          document.getElementById('uniqueId').style.color = "rgb(217 18 18)";
+          setErrorImei('Terminal no configurado, comuníquese con el administrador.');
+          isValid = false;
+        }else{
+          setErrorImei('');
+        }
       
       return isValid;
 
@@ -219,10 +231,11 @@ const Login = () => {
         
                     <form onSubmit={handleSubmit} className="App-formulario">
 
-                        {(errorUsername || errorPassword) && (
+                        {(errorUsername || errorPassword || errorImei) && (
                             <div className="error-container">
                             {errorUsername && <p className="error-message">{errorUsername}</p>}
                             {errorPassword && <p className="error-message">{errorPassword}</p>}
+                            {errorImei && <p className="error-message">{errorImei}</p>}
                             </div>
                         )}
             
@@ -247,7 +260,7 @@ const Login = () => {
                         />
                         <p className="character-count">{passwordCharacterCount}/6</p>
 
-                        <p className="App-IMEI" gutterBottom><UniqueIdGenerator /></p>
+                        <p className="App-IMEI" id='uniqueId' gutterBottom><UniqueIdGenerator /></p>
             
                         <Button variant="contained" color="primary" type="submit" fullWidth> Iniciar Sesión</Button>
             

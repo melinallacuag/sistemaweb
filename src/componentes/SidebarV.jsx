@@ -16,7 +16,7 @@ const SidebarV = () => {
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("authenticated");
-    if (loggedInUser) {
+    if (loggedInUser && loggedInUser !== 'undefined') {
       setauthenticated(JSON.parse(loggedInUser));
     }
     const loggedInTerminal = localStorage.getItem('authenticated');
