@@ -3,6 +3,7 @@ import logo from '../imagen/logo_appsven.png';
 import UniqueIdGenerator from './imei';
 import { TextField, Button } from '@mui/material';
 import Home from '../paginas/Home';
+import { v4 as uuidv4 } from 'uuid';
 
 const Login = () => {
     
@@ -43,6 +44,27 @@ const Login = () => {
         mail: '',
         locked: true,
         cancel: false
+      }
+    ];
+
+    const terminal = [
+      {
+        terminalID: 'PUNTO1',
+        imei: 'ebdc4a14802443f2',
+        fecha_Proceso:'23/06/2023',
+        turno: '01'
+      },
+      {
+        terminalID: 'PUNTO2',
+        imei: '07c179609cb5443f2',
+        fecha_Proceso:'24/05/2023',
+        turno: '02'
+      },
+      {
+        terminalID: 'PUNTO3',
+        imei: '07c179609cb5443f1',
+        fecha_Proceso:'24/05/2023',
+        turno: '03'
       }
     ];
 
@@ -159,9 +181,20 @@ const Login = () => {
       if (validateForm()) {
         setSuccessMessage('Inicio de sesión exitoso');
         setTimeout(() => {
+
+          let uniqueId = localStorage.getItem('uniqueId');
+
+          if (!uniqueId) {
+            uniqueId = uuidv4().replace(/-/g, '').substring(0, 16);
+            localStorage.setItem('uniqueId', uniqueId);
+          }
           setSuccessMessage('');
           const authenticatedUser = users.find(user => user.userID === username);
           localStorage.setItem("authenticated", JSON.stringify(authenticatedUser));
+
+          const authenticatedTerminal = terminal.find((terminals) => terminals.imei === uniqueId);
+          localStorage.setItem('authenticated',JSON.stringify(authenticatedTerminal) );
+
          // localStorage.setItem('authenticated', true);
           setAuthenticated(true);
         }, 3000);

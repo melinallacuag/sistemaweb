@@ -31,6 +31,9 @@ const Home = () => {
   /* Modal de Libre*/
   const [isModalLibreOpen, setIsModalLibreOpen] = useState(false);
 
+   /* Modal de Serafin*/
+   const [isModalSerafinOpen, setIsModalSerafinOpen] = useState(false);
+
   /* Modal de Soles*/
   const [isModalSolesOpen, setIsModalSolesOpen] = useState(false);
   const [inputSoles, setSoles] = useState('');
@@ -323,6 +326,64 @@ const Home = () => {
       }, 1000);
 
   };
+
+    /* Modal Serafin */
+    const handleModalSerafinOpen = () => {
+
+      if (isLadoMangueraSelected) {
+        setIsModalSerafinOpen(true);
+      } else {
+        setShowAlertError(true);
+  
+        setTimeout(() => {
+          setShowAlertError(false);
+        }, 1500); 
+  
+      }
+  
+    };
+    
+    const handleModalSerafinClose = () => {
+      setIsModalSerafinOpen(false);
+    };
+  
+    /* Guardar Modal Serafin*/
+    const handleSubmitSerafin = (e) => {
+
+      detalleVentaList.forEach((detalleVenta) => {
+        if (detalleVenta.cara === filtroLado) {
+
+          detalleVenta.tipoPago        = 'S';
+          detalleVenta.impuesto        = '18.0';
+          detalleVenta.nroPlaca        = '';
+          detalleVenta.tarjetaPuntos   = '';
+          detalleVenta.clienteID       = '';
+          detalleVenta.clienteRUC      = '';
+          detalleVenta.clienteRS       = '';
+          detalleVenta.clienteDR       = '';
+          detalleVenta.tarjetaND       = '';
+          detalleVenta.tarjetaCredito  = '';
+          detalleVenta.operacionREF    = '';
+          detalleVenta.observacion     = '';
+          detalleVenta.kilometraje     = '';
+          detalleVenta.montoSoles      = '0.00';
+          detalleVenta.mtoSaldoCredito = '0.0';
+          detalleVenta.ptosDisponible  ='0.0';
+
+        }
+
+      });
+  
+        setShowAlertSuccess(true);
+  
+        setTimeout(() => {
+  
+          setShowAlertSuccess(false);
+          handleModalSerafinClose();
+          
+        }, 1000);
+  
+    };
 
     
   /* Abrir o Cerrar Modal de Soles */
@@ -963,7 +1024,7 @@ const Home = () => {
                     <button className='btn_cards' onClick={handleModalBoletaOpen}>boleta</button>
                     <button className='btn_cards' onClick={handleModalFacturaOpen}>FACTURA</button>
                     <button className='btn_cards'>N/DESPACHO</button>
-                    <button className='btn_cards'>SERAFÍN</button>
+                    <button className='btn_cards' onClick={handleModalSerafinOpen}>SERAFÍN</button>
                     <button className='btn_cards'>PUNTOS</button>
                     <button className='btn_cards'>CANJE</button>
                     </div>
@@ -1390,6 +1451,23 @@ const Home = () => {
 
                   </Dialog>
           
+                {/* Modal Serafin*/}
+                <Dialog open={isModalSerafinOpen} onClose={handleModalSerafinClose}>
+                  <DialogTitle>Serafin</DialogTitle>
+                  <DialogContent>
+                    <p>¿Desea generar Serafín?</p>
+                  </DialogContent>
+
+                  {showAlertSuccess && (
+                      <div className={`floating-alertSuccess ${showAlertSuccess ? 'show' : ''}`}>
+                        <p className="alert-success">Se genero correctamente</p>
+                      </div>
+                    )}
+                  <DialogActions>
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalSerafinClose}>Cancelar</Button>
+                    <Button variant="contained" color="primary" onClick={handleSubmitSerafin}>Aceptar</Button>
+                  </DialogActions>
+                </Dialog>
           </div>
       </div>   
     </div>

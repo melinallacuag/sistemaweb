@@ -636,6 +636,7 @@ button:disabled {
   align-items: center;
   justify-content: center;
   padding-right: 0.5rem;
+  cursor: pointer;
 }
 
 .cont_datoFechaTurno{

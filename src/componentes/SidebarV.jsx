@@ -7,6 +7,10 @@ const SidebarV = () => {
   const [userName, setUserName] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const [terminalID, setTerminalID] = useState('');
+  const [fechaProceso, setFechaProceso] = useState('');
+  const [turnos, setTurno] = useState('');
+
     /* Modal de Libre*/
     const [isModalCerrarSesionOpen, setIsModalCerrarSesionOpen] = useState(false);
 
@@ -14,6 +18,13 @@ const SidebarV = () => {
     const loggedInUser = localStorage.getItem("authenticated");
     if (loggedInUser) {
       setauthenticated(JSON.parse(loggedInUser));
+    }
+    const loggedInTerminal = localStorage.getItem('authenticated');
+    if (loggedInTerminal) {
+      const terminalData = JSON.parse(loggedInTerminal);
+      setTerminalID(terminalData.terminalID);
+      setFechaProceso(terminalData.fecha_Proceso);
+      setTurno(terminalData.turno);
     }
   }, []);
 
@@ -30,6 +41,13 @@ const SidebarV = () => {
       localStorage.setItem("authenticated", JSON.stringify(authenticated));
     }
   }, [authenticated]);
+
+  useEffect(() => {
+    if (authenticated) {
+      setUserName(authenticated.names);
+    }
+  }, [authenticated]);
+
 
   const handleLogout = () => {
         
@@ -65,8 +83,8 @@ const SidebarV = () => {
         <nav className="horizontal-navbar" >
 
           <div className="cont_datoFechaTurno">
-            <p  className="text_fecha">Fecha: 06/06/2023</p>
-            <p  className="text_turnoPutno">Turno: 01  - PUNTO4 </p>
+            <p  className="text_fecha">Fecha: {fechaProceso}</p>
+            <p  className="text_turnoPutno">Turno: {turnos}  - {terminalID} </p>
           </div>
 
           <div class="topbar-divider"></div>
