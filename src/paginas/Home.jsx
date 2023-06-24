@@ -310,6 +310,14 @@ const Home = () => {
     }
   ];
 
+  const Setting = [
+    {
+      clienteID:'11111111',
+      clienteRZ:'Cliente Varios',
+      nroplaca:'000-0000',
+    }
+  ]
+
   const [detalleVentaList, setDetalleVentaList] = useState(detalleVenta);
 
   /* Filtrar Lados para mostrar Mangueras*/
@@ -1057,6 +1065,19 @@ const Home = () => {
         
       };
 
+
+      const handleSubmitBoletaSimple = (e) => {
+        e.preventDefault();
+
+        const { clienteID, clienteRZ, nroplaca } = Setting[0];
+        setDNI(clienteID)
+        setNombre(clienteRZ)
+        setPlaca(nroplaca)
+         
+      };
+
+      
+
   
 
   const DNICharacterCount = inputDNI.length;
@@ -1444,7 +1465,7 @@ const Home = () => {
                     </DialogContent>
 
                   <DialogActions>
- 
+                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleSubmitBoletaSimple}>Simple</Button>
                     <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalBoletaClose}>Cancelar</Button>
                     <Button variant="contained" color="primary"  onClick={handleSubmitBoleta} >Aceptar</Button>
                   </DialogActions>
@@ -1588,8 +1609,8 @@ const Home = () => {
 
                   <DialogActions>
 
-                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalFacturaClose}>Cancelar</Button>
-                    <Button variant="contained" color="primary"  onClick={handleSubmitFactura} >Aceptar</Button>
+                    <Button variant="contained" color="secondary" className='btn_cards' style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalFacturaClose}>Cancelar</Button>
+                    <Button className='btn_cards' onClick={handleSubmitFactura} >Aceptar</Button>
                   </DialogActions>
 
                   </Dialog>
