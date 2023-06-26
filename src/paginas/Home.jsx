@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField } from '@mui/material';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -13,6 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Sidebar from '../componentes/Sidebar';
 import SidebarV from '../componentes/SidebarV';
+import Print from '../impresion/PrintableComponent';
 
 const Home = () => {
 
@@ -44,8 +45,67 @@ const Home = () => {
   const [inputGalones, setGalones] = useState('');
   const [errorGalones, setErrorGalones] = useState('');
 
+  const [modoAutomatico, setModoAutomatico] = useState(false);
+  const [timer, setTimer] = useState(null);
+  const [isTaskScheduled, setIsTaskScheduled] = useState(false);
+
+  useEffect(() => {
+    if (modoAutomatico && !isTaskScheduled) {
+      const newTimer = setInterval(() => {
+        insertarDespacho();
+      }, 3000);
+
+      setTimer(newTimer);
+      setIsTaskScheduled(true);
+    } else if (!modoAutomatico && isTaskScheduled) {
+      clearInterval(timer);
+      setTimer(null);
+      setIsTaskScheduled(false);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [modoAutomatico, isTaskScheduled, timer]);
+
+  const handleAutomaticoClick = () => {
+    if (modoAutomatico) {
+      modoStop();
+     
+    } else {
+      modoAutomaticoFunc();
+    }
+  };
+
+  const modoAutomaticoFunc = () => {
+    if (!isTaskScheduled) {
+      const newTimer = setInterval(() => {
+        insertarDespacho();
+        console.log('hola');
+      }, 3000);
+
+      setTimer(newTimer);
+      setIsTaskScheduled(true);
+    }
+
+    setModoAutomatico(true);
+  };
+
+  const modoStop = () => {
+    if (isTaskScheduled) {
+      clearInterval(timer);
+      setTimer(null);
+      setIsTaskScheduled(false);
+    }
+
+    setModoAutomatico(false);
+  };
+
+  const insertarDespacho = () => {
+    // Lógica para insertar el despacho
+  };
     /* Datos Lados*/
-    const formaPago = [
+  const formaPago = [
       {
         cardId: '1',
         names: 'VISA'
@@ -70,9 +130,7 @@ const Home = () => {
         cardId: '6',
         names: 'PLIN'
       },
-    ];
-
-   
+  ];
 
   /* Modal de Boleta*/
   const [isModalBoletaOpen, setIsModalBoletaOpen] = useState(false);
@@ -104,10 +162,6 @@ const Home = () => {
   /* Alerta de Correcto o Error*/
   const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
-
- 
-
-
 
   /* Datos Lados*/
   const cards_lados = [
@@ -1096,11 +1150,16 @@ const Home = () => {
 
             <SidebarV />
 
+
+            <Print/>
                 {/* Campo de Stop*/}
                 <div className="card">
                   <div className="inner-cards">
                     <div className="transaction-table-container">
-                      <button className='btn_cards btn_automatico'>Automatico</button>
+                    <button className="btn_cards btn_automatico" onClick={handleAutomaticoClick} style={{ backgroundColor: modoAutomatico ? '#3aa538' : '#001E8A' }}
+          >
+                      {modoAutomatico ? 'Automatico' : 'Stop'}
+                      </button>
                     </div>
                   </div>
                 </div>
