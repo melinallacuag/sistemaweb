@@ -152,7 +152,7 @@ const Sidebar = ({ isOpen }) => {
 
                 {/* Modal Inicio de Día*/}
                 <Dialog open={isModalIDiaOpen} onClose={handleModalIDiaClose}>
-                  <DialogTitle>Inicio de Dia</DialogTitle>
+                  <DialogTitle>Inicio de Día</DialogTitle>
                   <DialogContent>
                     <p>¿Desea generar inicio de día?</p>
                   </DialogContent>
