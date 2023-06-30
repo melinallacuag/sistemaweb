@@ -721,3 +721,68 @@ button:disabled {
   margin-right: 0.5rem;
   width: 100%;
 }
+
+/* */
+.ticket {
+  width: 3.125in;
+  height: 230ft;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.ticket h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.ticket p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+
+/* */
+.trc{
+  font-size: 10px;
+  text-align: center;
+  margin: 0;
+  font-weight: 600;
+}
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+.clm-trc{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+}
+
+.linea {
+  border-top: 1px dashed #000;
+  margin-top: 5px;
+  width: 100%;
+}
+.text-end{
+  display: grid;
+}
+
+.clm-trcS{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.text-RIGHT{
+  text-align: right;
+}
+
+.logo{
+  width: 60%;
+}

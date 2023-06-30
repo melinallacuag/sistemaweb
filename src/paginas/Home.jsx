@@ -14,6 +14,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Sidebar from '../componentes/Sidebar';
 import SidebarV from '../componentes/SidebarV';
 import Print from '../impresion/PrintableComponent';
+import Bluetooth from '../impresion/Bluetooth';
+
+import ReactDOM from 'react-dom';
 
 const Home = () => {
 
@@ -1150,8 +1153,12 @@ const Home = () => {
 
             <SidebarV />
 
+        
+              <Print/>
 
-            <Print/>
+
+              <Bluetooth/>
+           
                 {/* Campo de Stop*/}
                 <div className="card">
                   <div className="inner-cards">
