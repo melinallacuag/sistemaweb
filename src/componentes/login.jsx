@@ -16,6 +16,19 @@ const Login = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') || false);
 
+    const [user, setuser] = useState([]);
+
+
+    useEffect(() => {
+      fetch('https://scratchya.com.ar/react/datos.php')
+        .then((response) => {
+          return response.json()
+        })
+        .then((articulos) => {
+          setuser(articulos)
+        })
+    }, [])
+
     const users = [
       {
         userID: '11111118',

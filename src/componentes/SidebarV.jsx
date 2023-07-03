@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField } from '@mui/material';
 
 const SidebarV = () => {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -11,8 +11,16 @@ const SidebarV = () => {
   const [fechaProceso, setFechaProceso] = useState('');
   const [turnos, setTurno] = useState('');
 
+
+
     /* Modal de Libre*/
     const [isModalCerrarSesionOpen, setIsModalCerrarSesionOpen] = useState(false);
+
+    const [isModalConfiguracionOpen, setIsModalConfiguracionOpen] = useState(false);
+
+    const [inputDireccionMac, setDireccionMac] = useState('');
+    const [inputNBluetooth, setNBluetooth] = useState('');
+    const [inputCEmparejamiento, setCEmparejamiento] = useState('');
   
 
   useEffect(() => {
@@ -67,6 +75,35 @@ const SidebarV = () => {
     setIsModalCerrarSesionOpen(false);
   };
 
+
+  /* Modal Configuracion */
+  const handleModalConfiguracionOpen = () => {
+ 
+    setIsModalConfiguracionOpen(true);
+
+};
+
+const handleDireccionMACChange = (event) => {
+  setDireccionMac(event.target.value);
+
+};
+
+const handleNBluetoothChange = (event) => {
+  setNBluetooth(event.target.value);
+
+};
+
+const handleCEmparejamientoChange = (e) => {
+  const value = e.target.value.replace(/\D/, '').slice(0, 4);
+  setCEmparejamiento(value);
+ 
+};
+
+
+const handleModalConfiguracionClose = () => {
+setIsModalConfiguracionOpen(false);
+};
+
   if (!authenticated) {
        
     return null;
@@ -92,11 +129,49 @@ const SidebarV = () => {
           {isDropdownOpen && (
               <div className="dropdown">
                 <ul>
-                  <li onClick={handleModalCerrarSesionOpen} >Cerrar Sesión</li>
+                <li onClick={handleModalConfiguracionOpen}>Configurar</li>
+                <hr />
+                <li onClick={handleModalCerrarSesionOpen} >Cerrar Sesión</li>
                 </ul>
               </div>
             
           )}
+
+          {/* Modal Configurar Impresora*/}
+          <Dialog open={isModalConfiguracionOpen} onClose={handleModalConfiguracionClose}>
+              <DialogTitle>Creación de impresión</DialogTitle>
+                <DialogContent>
+                <TextField 
+                              type="text"
+                              className="campo_input"
+                              value={inputDireccionMac}
+                              onChange={handleDireccionMACChange}
+                              margin="normal"
+                              label="Dirección MAC"
+                              fullWidth/>
+
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputNBluetooth}
+                              onChange={handleNBluetoothChange}
+                              margin="normal"
+                              label="Nombre Bluetooth"
+                              fullWidth/>
+                            <TextField
+                              type="text"
+                              className="campo_input"
+                              value={inputCEmparejamiento}
+                              onChange={handleCEmparejamientoChange}
+                              margin="normal"
+                              label="Clave de Emparejamiento"
+                              fullWidth/>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalConfiguracionClose}>Cancelar</Button>
+                  <Button variant="contained" color="primary" >Aceptar</Button>
+                </DialogActions>
+            </Dialog>
           
           {/* Modal Cerrar Sesion*/}
             <Dialog open={isModalCerrarSesionOpen} onClose={handleModalCerrarSesionClose}>

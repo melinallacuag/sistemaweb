@@ -1154,10 +1154,11 @@ const Home = () => {
             <SidebarV />
 
         
-              <Print/>
+              
 
 
-              <Bluetooth/>
+             {/* <Print/>
+             <Bluetooth/>*/} 
            
                 {/* Campo de Stop*/}
                 <div className="card">
