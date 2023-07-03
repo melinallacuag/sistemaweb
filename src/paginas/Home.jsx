@@ -1531,9 +1531,9 @@ const Home = () => {
                     </DialogContent>
 
                   <DialogActions>
-                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleSubmitBoletaSimple}>Simple</Button>
-                    <Button variant="contained" color="secondary" style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalBoletaClose}>Cancelar</Button>
-                    <Button variant="contained" color="primary"  onClick={handleSubmitBoleta} >Aceptar</Button>
+                    <button variant="contained" color="secondary" className='btn_cards' style={{ backgroundColor: 'rgb(34 228 232)' }} onClick={handleSubmitBoletaSimple}>Simple</button>
+                    <button variant="contained" color="secondary" className='btn_cards' style={{ backgroundColor: 'rgb(255, 43, 43)' }} onClick={handleModalBoletaClose}>Cancelar</button>
+                    <button variant="contained" color="primary"  className='btn_cards' onClick={handleSubmitBoleta} >Aceptar</button>
                   </DialogActions>
 
                 </Dialog>
@@ -1674,9 +1674,8 @@ const Home = () => {
                     </DialogContent>
 
                   <DialogActions>
-
-                    <Button variant="contained" color="secondary" className='btn_cards' style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalFacturaClose}>Cancelar</Button>
-                    <Button className='btn_cards' onClick={handleSubmitFactura} >Aceptar</Button>
+                    <button variant="contained" color="secondary" className='btn_cards' style={{ backgroundColor: '#ff2b2b' }} onClick={handleModalFacturaClose}>Cancelar</button>
+                    <button color="primary"  className='btn_cards'  onClick={handleSubmitFactura} >Aceptar</button>
                   </DialogActions>
 
                   </Dialog>
