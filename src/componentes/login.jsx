@@ -16,20 +16,23 @@ const Login = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') || false);
 
-    const [user, setuser] = useState([]);
-
+    const [users, setuser] = useState([]);
 
     useEffect(() => {
-      fetch('https://scratchya.com.ar/react/datos.php')
+      axios.get('api/users/listado')
         .then((response) => {
-          return response.json()
+          console.log(response.data);
+          return response.data; // Devuelve los datos para el siguiente bloque then
         })
         .then((articulos) => {
-          setuser(articulos)
+          setuser(articulos);
         })
-    }, [])
+        .catch((error) => {
+          console.error(error);
+        });
+    }, []);
 
-    const users = [
+   /* const users = [
       {
         userID: '11111118',
         password: '784',
@@ -60,7 +63,7 @@ const Login = () => {
         locked: true,
         cancel: false
       }
-    ];
+    ];*/
 
     const terminal = [
       {
@@ -148,7 +151,7 @@ const Login = () => {
           setErrorUsername('Ingresar usuario');
           isValid = false;
         }else {
-          const user = users.find(user => user.userID === username);
+          const user = users && users.find(user => user.userID === username);
           if (!user) {
             setErrorUsername('Usuario incorrecto');
             isValid = false;
@@ -165,7 +168,7 @@ const Login = () => {
           setErrorPassword('Ingresar contraseña');
           isValid = false;
         }else{
-          const passwords = users.find(passwords => passwords.password === checkPassword(password));
+          const passwords = users &&  users.find(passwords => passwords.password === checkPassword(password));
           if(!passwords){
             setErrorPassword('Contraseña incorrecto');
             isValid = false;
