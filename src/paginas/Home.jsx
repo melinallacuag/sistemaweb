@@ -16,6 +16,8 @@ import SidebarV from '../componentes/SidebarV';
 import Print from '../impresion/PrintableComponent';
 import Bluetooth from '../impresion/Bluetooth';
 
+import axios from 'axios';
+
 import ReactDOM from 'react-dom';
 
 const Home = () => {
@@ -166,8 +168,25 @@ const Home = () => {
   const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
 
+
+  const [cards_lados, setlados] = useState([]);
+  const idLados = "C46CED10678D3D48";
+
+  useEffect(() => {
+    axios.get(`api/lados/listado/${idLados}`)
+      .then((response) => {
+        return response.data;
+      })
+      .then((articulos) => {
+        setlados(articulos);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   /* Datos Lados*/
-  const cards_lados = [
+  /*const cards_lados = [
     {
       nroLado: '01',
       terminalID: 'PUNTO7'
@@ -181,10 +200,26 @@ const Home = () => {
       terminalID: 'PUNTO2'
     },
  
-  ];
+  ];*/
+
+  const [cards_mangueras, setmangueras] = useState([]);
+  const idMangueras = "PUNTO3";
+
+  useEffect(() => {
+    axios.get(`api/picos/listado2/${idMangueras}`)
+      .then((response) => {
+        return response.data;
+      })
+      .then((articulos) => {
+        setmangueras(articulos);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   /* Datos Manguera*/
-  const cards_mangueras = [
+  /*const cards_mangueras = [
     {
       mangueraID: '01',
       nroLado: '01',
@@ -252,7 +287,7 @@ const Home = () => {
     },
    
    
-  ];
+  ];*/
 
   /* Datos de Transacciones*/
   const detalleVenta = [
@@ -378,7 +413,9 @@ const Home = () => {
   const [detalleVentaList, setDetalleVentaList] = useState(detalleVenta);
 
   /* Filtrar Lados para mostrar Mangueras*/
-  const mangueraFiltrados = filtroLado === '' ? cards_mangueras : cards_mangueras.filter(manguera => manguera.nroLado === filtroLado);
+  //const mangueraFiltrados = filtroLado === '' ? cards_mangueras : cards_mangueras.filter(manguera => manguera.nroLado === filtroLado);
+  const mangueraFiltrados = filtroLado === '' ? cards_mangueras : cards_mangueras.filter(manguera => manguera.nroLado.toString() === filtroLado.toString());
+
 
   const handleLadoClick = lado => {
     setFiltroLado(lado);

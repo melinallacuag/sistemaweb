@@ -21,7 +21,7 @@ const Login = () => {
     useEffect(() => {
       axios.get('api/users/listado')
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           return response.data; // Devuelve los datos para el siguiente bloque then
         })
         .then((articulos) => {
@@ -64,6 +64,22 @@ const Login = () => {
         cancel: false
       }
     ];*/
+
+    const [Terminal, setterminal] = useState([]);
+    const idTerminal = "C46CED10678D3D48";
+
+    useEffect(() => {
+      axios.get(`api/terminal/listado/${idTerminal}`)
+        .then((response) => {
+          return response.data; 
+        })
+        .then((articulos) => {
+          setterminal(articulos);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, []);
 
     const terminal = [
       {
@@ -177,10 +193,10 @@ const Login = () => {
           }
         }
 
+         // Validación de Imei
         let uniqueId = localStorage.getItem('uniqueId');
         const imei = terminal.find((terminals) => terminals.imei === uniqueId);
         if(!imei){
-
           document.getElementById('uniqueId').style.color = "rgb(217 18 18)";
           setErrorImei('Terminal no configurado, comuníquese con el administrador.');
           isValid = false;
