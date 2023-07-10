@@ -168,9 +168,8 @@ const Home = () => {
   const [showAlertSuccess, setShowAlertSuccess] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
 
-
   const [cards_lados, setlados] = useState([]);
-  const idLados = "C46CED10678D3D48";
+  const idLados = localStorage.getItem('uniqueId') ? localStorage.getItem('uniqueId').toUpperCase() : '';
 
   useEffect(() => {
     axios.get(`api/lados/listado/${idLados}`)
@@ -204,6 +203,7 @@ const Home = () => {
 
   const [cards_mangueras, setmangueras] = useState([]);
   const idMangueras = "PUNTO3";
+
 
   useEffect(() => {
     axios.get(`api/picos/listado2/${idMangueras}`)

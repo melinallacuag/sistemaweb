@@ -1,6 +1,5 @@
 import React, {useState,useEffect } from 'react';
 import logo from '../imagen/logo_appsven.png';
-import UniqueIdGenerator from './imei';
 import { TextField, Button } from '@mui/material';
 import Home from '../paginas/Home';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,18 +10,23 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorUsername, setErrorUsername] = useState('');
-    const [errorImei, setErrorImei] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+
     const [successMessage, setSuccessMessage] = useState('');
     const [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') || false);
 
     const [users, setuser] = useState([]);
+    
+    const [terminal, setTerminal] = useState([]);
+    const [errorImei, setErrorImei] = useState('');
+    const idTerminal = localStorage.getItem('uniqueId') ? localStorage.getItem('uniqueId').toUpperCase() : '';
 
     useEffect(() => {
+
+      //Listado de Usuarios
       axios.get('api/users/listado')
         .then((response) => {
-          //console.log(response.data);
-          return response.data; // Devuelve los datos para el siguiente bloque then
+          return response.data;
         })
         .then((articulos) => {
           setuser(articulos);
@@ -30,77 +34,20 @@ const Login = () => {
         .catch((error) => {
           console.error(error);
         });
-    }, []);
 
-   /* const users = [
-      {
-        userID: '11111118',
-        password: '784',
-        identFID: 'ebdc4a14802443f1',
-        names: 'CAJERO1',
-        phone: '',
-        mail: '',
-        locked: true,
-        cancel: true
-      },
-      {
-        userID: '11111119',
-        password: '784',
-        identFID: 'b92f513b2db04125',
-        names: 'CAJERO2',
-        phone: '',
-        mail: '',
-        locked: false,
-        cancel: false
-      },
-      {
-        userID: '20593088',
-        password: '784',
-        identFID: 'b92f513b2db04123',
-        names: 'TITO GALDOS TALAVERANO',
-        phone: '',
-        mail: '',
-        locked: true,
-        cancel: false
-      }
-    ];*/
-
-    const [Terminal, setterminal] = useState([]);
-    const idTerminal = "C46CED10678D3D48";
-
-    useEffect(() => {
+      //Listado de Terminal - IDTerminal
       axios.get(`api/terminal/listado/${idTerminal}`)
         .then((response) => {
           return response.data; 
         })
-        .then((articulos) => {
-          setterminal(articulos);
+        .then((terminales) => {
+          setTerminal(terminales);
         })
         .catch((error) => {
           console.error(error);
         });
-    }, []);
 
-    const terminal = [
-      {
-        terminalID: 'PUNTO1',
-        imei: 'ebdc4a14802443f2',
-        fecha_Proceso:'22/06/2023',
-        turno: 1
-      },
-      {
-        terminalID: 'PUNTO2',
-        imei: 'b92f513b2db04125',
-        fecha_Proceso:'24/05/2023',
-        turno: 2
-      },
-      {
-        terminalID: 'PUNTO3',
-        imei: 'b92f513b2db04123',
-        fecha_Proceso:'24/05/2023',
-        turno: 3
-      }
-    ];
+    }, []);
 
     const checkPassword = (clave) => {
 
@@ -163,11 +110,12 @@ const Login = () => {
 
       let isValid = true;
 
+      // Validación de usuario
         if (username.trim() === '') {
           setErrorUsername('Ingresar usuario');
           isValid = false;
         }else {
-          const user = users && users.find(user => user.userID === username);
+          const user =  users.find(user => user.userID === username);
           if (!user) {
             setErrorUsername('Usuario incorrecto');
             isValid = false;
@@ -184,7 +132,8 @@ const Login = () => {
           setErrorPassword('Ingresar contraseña');
           isValid = false;
         }else{
-          const passwords = users &&  users.find(passwords => passwords.password === checkPassword(password));
+          const hashedPassword = checkPassword(password);
+          const passwords = users.find(passwords => passwords.password === hashedPassword);
           if(!passwords){
             setErrorPassword('Contraseña incorrecto');
             isValid = false;
@@ -193,9 +142,9 @@ const Login = () => {
           }
         }
 
-         // Validación de Imei
+        // Validación de Imei
         let uniqueId = localStorage.getItem('uniqueId');
-        const imei = terminal.find((terminals) => terminals.imei === uniqueId);
+        const imei = terminal.find(terminales => terminales.imei === uniqueId.toUpperCase());
         if(!imei){
           document.getElementById('uniqueId').style.color = "rgb(217 18 18)";
           setErrorImei('Terminal no configurado, comuníquese con el administrador.');
@@ -227,14 +176,16 @@ const Login = () => {
         setSuccessMessage('Inicio de sesión exitoso');
         setTimeout(() => {
 
-          let uniqueId = localStorage.getItem('uniqueId');
+          const uniqueId = localStorage.getItem('uniqueId');
 
           if (!uniqueId) {
             uniqueId = uuidv4().replace(/-/g, '').substring(0, 16);
             localStorage.setItem('uniqueId', uniqueId);
           }
-          const authenticatedTerminal = terminal.find((terminals) => terminals.imei === uniqueId);
+
+          const authenticatedTerminal = terminal.find(terminales => terminales.imei === uniqueId.toUpperCase());
           localStorage.setItem('authenticated',JSON.stringify(authenticatedTerminal) );
+     
 
           const authenticatedUser = users.find(user => user.userID === username);
           localStorage.setItem("authenticatedUser", JSON.stringify(authenticatedUser));
@@ -248,12 +199,15 @@ const Login = () => {
   
     const usernameCharacterCount = username.length;
     const passwordCharacterCount = password.length;
-  
+    const uniqueId = localStorage.getItem('uniqueId') || '';
+    
+    const terminalID = useState(localStorage.getItem('terminalID') || '');
+
     if (authenticated) {
+
       return <Home />;
-    }
-  
-    return (
+
+    } return (
         <div className="App">
             <header className="App-header">
                 <div className="login-container">
@@ -273,7 +227,7 @@ const Login = () => {
                         )}
             
                         <TextField
-                            type="text"
+                            type="number"
                             value={username}
                             onChange={handleUsernameChange}
                             margin="normal"
@@ -293,7 +247,7 @@ const Login = () => {
                         />
                         <p className="character-count">{passwordCharacterCount}/6</p>
 
-                        <p className="App-IMEI" id='uniqueId' gutterBottom><UniqueIdGenerator /></p>
+                        <p className="App-IMEI" id='uniqueId' gutterBottom>{uniqueId}</p>
             
                         <Button variant="contained" color="primary" type="submit" fullWidth> Iniciar Sesión</Button>
             
