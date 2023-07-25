@@ -7,20 +7,21 @@ const SidebarV = () => {
   const [userName, setUserName] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const [terminalID, setTerminalID] = useState('');
-  const [fechaProceso, setFechaProceso] = useState('');
-  const [turnos, setTurno] = useState('');
-
-
+ // const [terminalID, setTerminalID] = useState('');
+  //const [fechaProceso, setFechaProceso] = useState('');
+ // const [turnos, setTurno] = useState('');
 
     /* Modal de Libre*/
     const [isModalCerrarSesionOpen, setIsModalCerrarSesionOpen] = useState(false);
-
     const [isModalConfiguracionOpen, setIsModalConfiguracionOpen] = useState(false);
 
     const [inputDireccionMac, setDireccionMac] = useState('');
     const [inputNBluetooth, setNBluetooth] = useState('');
     const [inputCEmparejamiento, setCEmparejamiento] = useState('');
+
+    const terminalID   =  localStorage.getItem('terminalID') ? localStorage.getItem('terminalID') : '';
+    const fechaProceso =  localStorage.getItem('fecha_proceso') ? localStorage.getItem('fecha_proceso') : '';
+    const turnos       =  localStorage.getItem('turno') ? localStorage.getItem('turno') : '';
   
 
   useEffect(() => {
@@ -31,9 +32,9 @@ const SidebarV = () => {
     const loggedInTerminal = localStorage.getItem('authenticated');
     if (loggedInTerminal) {
       const terminalData = JSON.parse(loggedInTerminal);
-      setTerminalID(terminalData.terminalID);
-      setFechaProceso(terminalData.fecha_Proceso);
-      setTurno(terminalData.turno);
+   //   setTerminalID(terminalData.terminalID);
+   //   setFechaProceso(terminalData.fecha_Proceso);
+    //  setTurno(terminalData.turno);
     }
 
     const loggedInUsers = localStorage.getItem('authenticatedUser');

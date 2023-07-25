@@ -169,7 +169,7 @@ const Home = () => {
   const [showAlertError, setShowAlertError] = useState(false);
 
   const [cards_lados, setlados] = useState([]);
-  const idLados = localStorage.getItem('uniqueId') ? localStorage.getItem('uniqueId').toUpperCase() : '';
+  const idLados = localStorage.getItem('imei') ? localStorage.getItem('imei').toUpperCase() : '';
 
   useEffect(() => {
     axios.get(`api/lados/listado/${idLados}`)
@@ -202,7 +202,9 @@ const Home = () => {
   ];*/
 
   const [cards_mangueras, setmangueras] = useState([]);
-  const idMangueras = "PUNTO3";
+  
+  const idMangueras =  localStorage.getItem('terminalID') ? localStorage.getItem('terminalID').toUpperCase() : '';
+ // const idMangueras = "PUNTO3";
 
 
   useEffect(() => {
@@ -292,7 +294,7 @@ const Home = () => {
   /* Datos de Transacciones*/
   const detalleVenta = [
     {
-      cara: '01',
+      cara: '07',
       tipoPago: 'E',
       impuesto: '18.0',
       nroPlaca:'',
@@ -311,7 +313,7 @@ const Home = () => {
       ptosDisponible:'0.0'
     },
     {
-      cara: '02',
+      cara: '08',
       tipoPago: 'E',
       impuesto: '18.0',
       nroPlaca:'',
@@ -330,26 +332,7 @@ const Home = () => {
       ptosDisponible:'0.0'
     },
     {
-      cara: '03',
-      tipoPago: 'E',
-      impuesto: '18.0',
-      nroPlaca:'',
-      tarjetaPuntos:'',
-      clienteID:'',
-      clienteRUC:'',
-      clienteRS:'',
-      clienteDR:'',
-      tarjetaND:'',
-      tarjetaCredito:'',
-      operacionREF:'',
-      observacion:'',
-      kilometraje:'',
-      montoSoles:'0.00',
-      mtoSaldoCredito:'0.0',
-      ptosDisponible:'0.0'
-    },
-    {
-      cara: '04',
+      cara: '09',
       tipoPago: 'E',
       impuesto: '18.0',
       nroPlaca:'',

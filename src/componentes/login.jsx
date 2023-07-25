@@ -42,6 +42,15 @@ const Login = () => {
         })
         .then((terminales) => {
           setTerminal(terminales);
+
+          const terminal = terminales.find(terminales => terminales.imei === idTerminal.toUpperCase());
+
+          if (terminal) {
+            localStorage.setItem('terminalID', terminal.terminalID);
+          // localStorage.setItem('imei', terminal.imei);
+          }
+
+       
         })
         .catch((error) => {
           console.error(error);
@@ -200,8 +209,6 @@ const Login = () => {
     const usernameCharacterCount = username.length;
     const passwordCharacterCount = password.length;
     const uniqueId = localStorage.getItem('uniqueId') || '';
-    
-    const terminalID = useState(localStorage.getItem('terminalID') || '');
 
     if (authenticated) {
 

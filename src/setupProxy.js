@@ -1,10 +1,13 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
+
+  url= 'http://4-fact.com:8081/';
+  
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://192.168.1.10:8081',
+      target: url,
       secure: false,
       changeOrigin: true,
     })
