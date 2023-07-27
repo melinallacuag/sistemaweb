@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField,IconButton } from '@mui/material';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -15,13 +15,11 @@ import Sidebar from '../componentes/Sidebar';
 import SidebarV from '../componentes/SidebarV';
 import Print from '../impresion/PrintableComponent';
 import Bluetooth from '../impresion/Bluetooth';
-
+import useDoubleClick from '../componentes/useDoubleClick';
 import axios from 'axios';
-
-import ReactDOM from 'react-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Home = () => {
-
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -109,8 +107,23 @@ const Home = () => {
   const insertarDespacho = () => {
     // Lógica para insertar el despacho
   };
+
+  const [formaPago, setformaPago] = useState([]);
+
+  useEffect(() => {
+    axios.get(`api/card/listado`)
+      .then((response) => {
+        return response.data;
+      })
+      .then((articulos) => {
+        setformaPago(articulos);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
     /* Datos Lados*/
-  const formaPago = [
+ /* const formaPago = [
       {
         cardId: '1',
         names: 'VISA'
@@ -135,7 +148,7 @@ const Home = () => {
         cardId: '6',
         names: 'PLIN'
       },
-  ];
+  ];*/
 
   /* Modal de Boleta*/
   const [isModalBoletaOpen, setIsModalBoletaOpen] = useState(false);
@@ -290,9 +303,26 @@ const Home = () => {
    
    
   ];*/
+  
+  const [detalleVenta, setdetalleVenta] = useState([]);
+  const idImeiTerminal =  localStorage.getItem('imei') ? localStorage.getItem('imei').toUpperCase() : '';
+  // const idImeiTerminal = EBDC4A14802443F2
 
+  useEffect(() => {
+    axios.get(`api/detalleventa/listado/${idImeiTerminal}`)
+      .then((response) => {
+        return response.data;
+      })
+      .then((articulo) => {
+        setdetalleVenta(articulo);
+        setDetalleVentaList(articulo);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   /* Datos de Transacciones*/
-  const detalleVenta = [
+ /* const detalleVenta = [
     {
       cara: '07',
       tipoPago: 'E',
@@ -350,7 +380,80 @@ const Home = () => {
       mtoSaldoCredito:'0.0',
       ptosDisponible:'0.0'
     },
-  ]
+  ]*/
+
+  /* 
+   * Inicio de Listado de Clientes por DNI 
+  */
+
+  const [LClientesDNI, setLClienteDNI] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredClientes, setFilteredClientes] = useState([]);
+  const [isModalLClienteOpen, setIsModalLClienteOpen] = useState(false);
+
+    // APIREST - LClientes - DNI
+    useEffect(() => {
+      axios.get(`api/cliente/listado/DNI`)
+        .then((response) => {
+          return response.data;
+        })
+        .then((articulo) => {
+          setLClienteDNI(articulo);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, []);
+
+    // Buscador - ClienteRZ
+    const handleSearch = (searchTerm) => {
+      setSearchTerm(searchTerm);
+    };
+
+    useEffect(() => {
+      const filtered = LClientesDNI.filter((cliente) =>
+        cliente.clienteRZ.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredClientes(filtered);
+    }, [searchTerm, LClientesDNI]);
+
+    
+    // MODAL - LClientes
+    const handleModalLClienteOpen = (clienteRZ, clienteDNI, clienteDireccion) => {
+
+      setIsModalLClienteOpen(false);
+  
+      if (!isModalLClienteOpen) {
+        setIsModalLClienteOpen(true);
+      } else {
+        setShowAlertError(true);
+        setTimeout(() => {
+          setShowAlertError(false);
+        }, 1500); 
+      }
+      
+      setDNI(clienteDNI);
+      setNombre(clienteRZ);
+      setDireccion(clienteDireccion);
+    };
+  
+    const handleModalLClienteClose = (clienteRZ, clienteDNI, clienteDireccion) => {
+      setIsModalLClienteOpen(false);
+      setShowAlertSuccess(false);
+      
+      setSearchTerm('');
+
+      setDNI(clienteDNI);
+      setNombre(clienteRZ);
+      setDireccion(clienteDireccion);
+     
+    };
+
+    const handleDoubleClickInputDNI = useDoubleClick(handleModalLClienteOpen);
+
+  /* 
+   * Final de Listado de Clientes por DNI 
+  */
 
   const LCliente = [
     {
@@ -396,9 +499,7 @@ const Home = () => {
   const [detalleVentaList, setDetalleVentaList] = useState(detalleVenta);
 
   /* Filtrar Lados para mostrar Mangueras*/
-  //const mangueraFiltrados = filtroLado === '' ? cards_mangueras : cards_mangueras.filter(manguera => manguera.nroLado === filtroLado);
   const mangueraFiltrados = filtroLado === '' ? cards_mangueras : cards_mangueras.filter(manguera => manguera.nroLado.toString() === filtroLado.toString());
-
 
   const handleLadoClick = lado => {
     setFiltroLado(lado);
@@ -410,6 +511,8 @@ const Home = () => {
     setSelectedManguera(manguera);
     setIsLadoMangueraSelected(filtroLado !== '' && manguera !== null); 
   };
+
+ 
 
    /* Modal Libre */
    const handleModalLibreOpen = () => {
@@ -429,6 +532,7 @@ const Home = () => {
   
   const handleModalLibreClose = () => {
     setIsModalLibreOpen(false);
+
   };
 
   /* Guardar Modal Libre*/
@@ -701,9 +805,10 @@ const Home = () => {
       setErrorPlaca('');
     };
     
-    const handleDNIChange = (e) => {
-      const value = e.target.value.replace(/\D/, '').slice(0, 8);
-      setDNI(value);
+    const handleDNIChange = (event) => {
+     // const value = e.target.value.replace(/\D/, '').slice(0, 8);
+      setDNI(event.target.value);
+     // setDNI(value);
       setErrorDNI('');
     };
 
@@ -852,7 +957,7 @@ const Home = () => {
             detalleVenta.kilometraje     = '';
             detalleVenta.montoSoles      = '0.00';
             detalleVenta.mtoSaldoCredito = '0.0';
-            detalleVenta.ptosDisponible  ='0.0';
+            detalleVenta.ptosDisponible  = '0.0';
 
             if (selectedOption === 'Tarjeta') {
               detalleVenta.tarjetaCredito = selectedOptionFPago;
@@ -1027,7 +1132,7 @@ const Home = () => {
               detalleVenta.kilometraje     = '';
               detalleVenta.montoSoles      = '0.00';
               detalleVenta.mtoSaldoCredito = '0.0';
-              detalleVenta.ptosDisponible  ='0.0';
+              detalleVenta.ptosDisponible  = '0.0';
   
               if (selectedOption === 'Tarjeta') {
                 detalleVenta.tarjetaCredito = selectedOptionFPago;
@@ -1153,15 +1258,10 @@ const Home = () => {
          
       };
 
-      
-
-  
-
-  const DNICharacterCount = inputDNI.length;
-  const NombreCharacterCount = inputNombre.length;
-
   const RUCCharacterCount = inputRUC.length;
   const RSocialCharacterCount = inputRSocial.length;
+
+
   
   return (
     <div className='app'>
@@ -1172,10 +1272,6 @@ const Home = () => {
           <div className='cont_sliroutes'>
 
             <SidebarV />
-
-        
-              
-
 
              {/* <Print/>
              <Bluetooth/>*/} 
@@ -1194,9 +1290,6 @@ const Home = () => {
 
 
                 <div className="card-container">      
-
-
-
 
                   {/* Campo de Lados*/}
                   <div className="card">
@@ -1430,18 +1523,26 @@ const Home = () => {
                         </div>
                       )}
 
-                        <TextField type="text" className='campo_input' defaultValue={inputPlaca} onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
+                        <TextField type="text" className='campo_input' defaultValue={inputPlaca}  onChange={handlePlacaChange} margin="normal" label="Ingresar N° de Placa" fullWidth />  
                         
                         <div className='cont_campos'>
                           <div className='cont_Tcampos'>
-                            <TextField type="text" className='campo_input' value={inputDNI} onChange={handleDNIChange} margin="normal" label="Ingresar DNI" fullWidth /> 
-                            <p className="character-count">{DNICharacterCount}/8</p>
+                            <TextField 
+                              type="text" 
+                              className='campo_input' 
+                              value={inputDNI} 
+                              onChange={handleDNIChange} 
+                              onTouchStart={handleDoubleClickInputDNI} 
+                              onDoubleClick={handleModalLClienteOpen}  
+                              margin="normal" label="Ingresar DNI" fullWidth 
+                            /> 
+                            <p className="character-count">{inputDNI ? inputDNI.length : 0}/8</p>
                           </div>
                           <button className='btn_cards'  onClick={handleSubmitReniec} >RENIEC</button>
                         </div>
 
                         <TextField type="text" className='campo_input' value={inputNombre} onChange={handleNombreChange} margin="normal" label="Ingresar Nombre" fullWidth /> 
-                        <p className="character-count">{NombreCharacterCount}</p>
+                        <p className="character-count">{inputNombre.length}</p>
                         
                         <TextField type="text" className='campo_input' value={inputDireccion} onChange={handleDireccionChange} margin="normal" label="Ingresar Dirección" fullWidth /> 
                         
@@ -1455,7 +1556,7 @@ const Home = () => {
                           value={selectedOption}
                           onChange={handleOptionChange} >
 
-                          <FormGroup row style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+                          <FormGroup row style={{ display: 'flex', justifyContent: 'space-around', width: '100%',flexWrap: 'nowrap' }}>
 
                             <FormControlLabel
                               value="Efectivo"
@@ -1559,6 +1660,47 @@ const Home = () => {
 
                 </Dialog>
 
+                {/* Modal Lista de Clientes*/}
+
+                <Dialog open={isModalLClienteOpen} onClose={handleModalLClienteClose}>
+                  <DialogTitle>Lista de Clientes</DialogTitle>
+                  <DialogContent>
+                    
+                        <TextField
+                          type="text"
+                          value={searchTerm}
+                          onChange={(e) => handleSearch(e.target.value)}
+                          label="Buscar Cliente por Razón Social..."
+                          margin="normal"
+                          fullWidth
+                          InputProps={{
+                            endAdornment: (
+                                <SearchIcon />
+                            ),
+                          }}
+                        />
+
+                      <div className='datos_transacciones'>
+                          <p className='text_dato' style={{ width: '15%' }}>ID CLIENTE</p>
+                          <p className='text_dato' style={{ width: '35%' }}>RAZÓN SOCIAL</p>
+                          <p className='text_dato' style={{ width: '50%' }}>DIRECCIÓN</p>
+                      </div>
+
+                      {filteredClientes.map((LClientesDNI, index) => (
+                        <div className='datosP_transacciones' key={index} onClick={() => handleModalLClienteOpen(LClientesDNI.clienteRZ, LClientesDNI.clienteID, LClientesDNI.clienteDR)}>
+                          <p className='text_datoP' style={{ width: '15%' }}>{LClientesDNI.clienteID}</p>
+                          <p className='text_datoP' style={{ width: '35%', wordWrap: 'break-word' }}>{LClientesDNI.clienteRZ}</p>
+                          <p className='text_datoP' style={{ width: '50%', overflowWrap: 'break-word' }}>{LClientesDNI.clienteDR}</p>
+                        </div>
+                      ))}
+
+                  </DialogContent>
+
+                  <DialogActions>
+                    <button variant="contained" color="secondary" className='btn_cards' style={{ backgroundColor: 'rgb(255, 43, 43)' }} onClick={handleModalLClienteClose}>Cancelar</button>
+                  </DialogActions>
+                </Dialog>
+
                  {/* Modal Factura*/}
                  <Dialog open={isModalFacturaOpen} onClose={handleModalFacturaClose} >
 
@@ -1599,7 +1741,7 @@ const Home = () => {
                           value={selectedOption}
                           onChange={handleOptionChange} >
 
-                          <FormGroup row style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+                          <FormGroup row style={{ display: 'flex', justifyContent: 'space-around', width: '100%', flexWrap: 'nowrap' }}>
 
                             <FormControlLabel
                               value="Efectivo"

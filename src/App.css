@@ -114,22 +114,22 @@
 }
 .datos_transacciones{
 
-  min-width: fit-content;
+  /*min-width: fit-content;*/
   
 
 }
 .text_dato{
-  white-space: nowrap;
+ /* white-space: nowrap;*/
 }
 
 .datosP_transacciones{
 
-  min-width: fit-content;
+ /* min-width: fit-content;*/
   
 
 }
 .text_datoP{
-  white-space: nowrap;
+ /* white-space: nowrap;*/
 }
 
 .cont_datoFechaTurno{
@@ -582,7 +582,7 @@ button:disabled {
   justify-content: space-around;
   background-color: hsl(224.69deg 69.38% 59.02%);
   border-radius: 0.5rem;
-  height: 35px;
+  height: 45px;
   margin-bottom: 0.35rem;
   padding-left: 0.2rem;
   padding-right: 0.2rem;
@@ -601,7 +601,7 @@ button:disabled {
   justify-content: space-around;
   background-color: #acacac;
   border-radius: 0.5rem;
-  height: 35px;
+  height: 45px;
   margin-bottom: 0.35rem;
   padding-left: 0.2rem;
   padding-right: 0.2rem;
